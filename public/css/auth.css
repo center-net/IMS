@@ -1,0 +1,26 @@
+/* أنماط صفحة المصادقة */
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 50%, #6f42c1 100%);
+}
+.auth-card{
+    backdrop-filter: blur(8px);
+    background-color: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 1rem;
+    min-height: 56vh; /* ارتفاع بصري مريح */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* يوسّط محتوى البطاقة عموديًا */
+}
+.text-white-75{ color: rgba(255,255,255,0.75) !important; }
+.input-group-text{ border-color: rgba(255,255,255,0.35) !important; }
+.form-control.form-control-lg{
+    background-color: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+}
+.form-control.form-control-lg::placeholder{ color: rgba(255,255,255,0.70); }
+
