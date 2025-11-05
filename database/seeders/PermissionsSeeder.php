@@ -241,6 +241,42 @@ class PermissionsSeeder extends Seeder
             ],
         ];
 
+        // صلاحيات إعدادات الشركة
+        $companyPermissions = [
+            [
+                'name' => 'view-companies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة إعدادات الشركة',
+                    'en' => 'View Company Settings'
+                ]
+            ],
+            [
+                'name' => 'create-companies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة إعدادات الشركة',
+                    'en' => 'Create Company Settings'
+                ]
+            ],
+            [
+                'name' => 'edit-companies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل إعدادات الشركة',
+                    'en' => 'Edit Company Settings'
+                ]
+            ],
+            [
+                'name' => 'delete-companies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف إعدادات الشركة',
+                    'en' => 'Delete Company Settings'
+                ]
+            ],
+        ];
+
         // دمج جميع الصلاحيات
         $allPermissions = array_merge(
             $userPermissions,
@@ -249,7 +285,8 @@ class PermissionsSeeder extends Seeder
             $logsPermissions,
             $countryPermissions,
             $cityPermissions,
-            $villagePermissions
+            $villagePermissions,
+            $companyPermissions
         );
 
         // إنشاء الصلاحيات

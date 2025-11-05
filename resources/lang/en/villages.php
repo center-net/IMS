@@ -20,6 +20,7 @@ return [
     'update' => 'Update',
     'save' => 'Save',
     'select_city' => 'Select city',
+    'search_city' => 'Search governorate...',
     'created' => 'Village created successfully.',
     'updated_success' => 'Village updated successfully.',
     'deleted' => 'Village deleted successfully.',
@@ -32,5 +33,5 @@ return [
     'confirm' => 'Confirm',
     'cancel' => 'Cancel',
     'cancelled' => 'Operation cancelled',
+    
 ];
-

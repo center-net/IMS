@@ -6,12 +6,14 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\City;
 use App\Models\Country;
+use Livewire\Attributes\Url;
 
 class CityList extends Component
 {
     use WithPagination;
 
     public $search = '';
+    #[Url]
     public $countryFilter = null;
     public $perPage = 10;
     public $pendingDeleteId = null;
@@ -44,6 +46,23 @@ class CityList extends Component
         $this->dispatch('showConfirmModal');
     }
 
+    private function normalizeCountryFilter(): void
+    {
+        if ($this->countryFilter && !is_numeric($this->countryFilter)) {
+            $code = strtoupper((string) $this->countryFilter);
+            $country = Country::where('iso_code', $code)->first();
+            if ($country) {
+                $this->countryFilter = $country->id;
+                return;
+            }
+            // Fallback by translated name (ar/en)
+            $byName = Country::whereTranslation('name', $this->countryFilter)->first();
+            if ($byName) {
+                $this->countryFilter = $byName->id;
+            }
+        }
+    }
+
     public function deleteConfirmed()
     {
         if (!$this->pendingDeleteId) return;
@@ -61,6 +80,7 @@ class CityList extends Component
 
     public function render()
     {
+        $this->normalizeCountryFilter();
         $query = City::query()
             ->when($this->countryFilter, function ($q) {
                 $q->where('country_id', $this->countryFilter);
@@ -80,4 +100,3 @@ class CityList extends Component
         ]);
     }
 }
-

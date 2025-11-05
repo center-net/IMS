@@ -10,6 +10,8 @@ use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\GeneralManagerRoleSeeder;
 use Database\Seeders\CountriesSeeder;
 use Database\Seeders\CitiesSeeder;
+use Database\Seeders\VillagesSeeder;
+use Database\Seeders\CompaniesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,5 +36,11 @@ class DatabaseSeeder extends Seeder
 
         // إدراج مدن فلسطين
         $this->call(CitiesSeeder::class);
+
+        // إدراج القرى التابعة للمدن المطلوبة
+        $this->call(VillagesSeeder::class);
+
+        // إدراج شركة افتراضية (متعدد اللغات)
+        $this->call(CompaniesSeeder::class);
     }
 }

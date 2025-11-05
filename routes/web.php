@@ -54,10 +54,25 @@ Route::group(
             ->name('cities.index')
             ->middleware(['auth', 'can:view-cities']);
 
+        // Palestine-only cities page (protected by permissions)
+        Route::view('/cities/palestine', 'cities.palestine')
+            ->name('cities.palestine')
+            ->middleware(['auth', 'can:view-cities']);
+
         // Villages management (protected by permissions)
         Route::view('/villages', 'villages.index')
             ->name('villages.index')
             ->middleware(['auth', 'can:view-villages']);
+
+        // Palestine-only villages page (protected by permissions)
+        Route::view('/villages/palestine', 'villages.palestine')
+            ->name('villages.palestine')
+            ->middleware(['auth', 'can:view-villages']);
+
+        // Company settings (protected by permissions)
+        Route::view('/settings/company', 'companies.index')
+            ->name('companies.index')
+            ->middleware(['auth', 'can:view-companies']);
 
         // System Logs (protected by permissions)
         Route::view('/logs', 'logs.index')
