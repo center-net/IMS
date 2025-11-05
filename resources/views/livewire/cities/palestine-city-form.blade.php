@@ -1,7 +1,7 @@
 <div>
     <div class="card shadow-sm">
         <div class="card-body">
-            <h5 class="card-title mb-3">نموذج المحافظة (فلسطين)</h5>
+            <h5 class="card-title mb-3">{{ __('cities.palestine_form_title') }}</h5>
             <form wire:submit.prevent="save">
                 <div class="mb-2">
                     <label class="form-label">{{ __('cities.name') }}</label>
@@ -17,7 +17,7 @@
 
                 <div class="mb-2 text-muted">
                     <i class="bi-flag"></i>
-                    الدولة: <span class="badge bg-light text-dark">{{ optional($country?->translate(app()->getLocale()))->name ?? ($country?->name ?? 'فلسطين') }}</span>
+                    {{ __('common.country_label') }} <span class="badge bg-light text-dark">{{ optional($country?->translate(app()->getLocale()))->name ?? ($country?->name ?? __('countries.palestine')) }}</span>
                 </div>
 
                 <div class="d-flex gap-2 mt-3">
@@ -30,4 +30,3 @@
         </div>
     </div>
 </div>
-

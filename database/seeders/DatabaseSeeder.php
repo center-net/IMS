@@ -42,5 +42,14 @@ class DatabaseSeeder extends Seeder
 
         // إدراج شركة افتراضية (متعدد اللغات)
         $this->call(CompaniesSeeder::class);
+
+        // إدراج السنوات المالية الافتراضية
+        $this->call(FiscalYearsSeeder::class);
+
+        // إدراج الأشهر المالية لكل سنة مالية موجودة
+        $this->call(FiscalMonthsSeeder::class);
+
+        // إدراج خزنة افتراضية (الخزائن)
+        $this->call(TreasuriesSeeder::class);
     }
 }

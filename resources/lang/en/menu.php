@@ -16,6 +16,8 @@ return [
     'tax_settings' => 'Tax Settings',
     'general_settings' => 'General Settings',
     'fiscal_years' => 'Fiscal Years',
+    'fiscal_months' => 'Fiscal Months',
+    'treasuries' => 'Treasury Management',
     'warehouses' => 'Warehouse Management',
     'manufacturing_lines' => 'Manufacturing Lines',
     'employee_grades' => 'Employee Grades',

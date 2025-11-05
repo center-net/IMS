@@ -74,6 +74,21 @@ Route::group(
             ->name('companies.index')
             ->middleware(['auth', 'can:view-companies']);
 
+        // Fiscal Years settings (protected by permissions)
+        Route::view('/settings/fiscal-years', 'fiscal-years.index')
+            ->name('fiscal-years.index')
+            ->middleware(['auth', 'can:view-fiscal-years']);
+
+        // Fiscal Months settings (protected by permissions; reuse view-fiscal-years for now)
+        Route::view('/settings/fiscal-months', 'fiscal-months.index')
+            ->name('fiscal-months.index')
+            ->middleware(['auth', 'can:view-fiscal-years']);
+
+        // Treasuries (Vaults) management (protected by permissions)
+        Route::view('/settings/treasuries', 'treasuries.index')
+            ->name('treasuries.index')
+            ->middleware(['auth', 'can:view-treasuries']);
+
         // System Logs (protected by permissions)
         Route::view('/logs', 'logs.index')
             ->name('logs.index')

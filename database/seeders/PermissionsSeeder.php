@@ -13,6 +13,17 @@ class PermissionsSeeder extends Seeder
      */
     public function run(): void
     {
+        // تنظيف الصلاحيات الملغاة قبل الإنشاء
+        $deprecatedPermissionNames = [
+            'delete-fiscal-years',
+            'edit-fiscal-years',
+            'create-companies',
+            'delete-companies',
+        ];
+        Permission::where('guard_name', 'web')
+            ->whereIn('name', $deprecatedPermissionNames)
+            ->delete();
+
         // صلاحيات المستخدمين
         $userPermissions = [
             [
@@ -252,14 +263,6 @@ class PermissionsSeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'create-companies',
-                'guard_name' => 'web',
-                'display_name' => [
-                    'ar' => 'إضافة إعدادات الشركة',
-                    'en' => 'Create Company Settings'
-                ]
-            ],
-            [
                 'name' => 'edit-companies',
                 'guard_name' => 'web',
                 'display_name' => [
@@ -267,12 +270,88 @@ class PermissionsSeeder extends Seeder
                     'en' => 'Edit Company Settings'
                 ]
             ],
+        ];
+
+        // صلاحيات السنوات المالية
+        $fiscalYearPermissions = [
             [
-                'name' => 'delete-companies',
+                'name' => 'view-fiscal-years',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'حذف إعدادات الشركة',
-                    'en' => 'Delete Company Settings'
+                    'ar' => 'مشاهدة السنوات المالية',
+                    'en' => 'View Fiscal Years'
+                ]
+            ],
+            [
+                'name' => 'create-fiscal-years',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة سنة مالية',
+                    'en' => 'Create Fiscal Year'
+                ]
+            ],
+            [
+                'name' => 'close-fiscal-years',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إغلاق سنة مالية',
+                    'en' => 'Close Fiscal Year'
+                ]
+            ],
+        ];
+
+        // صلاحيات الأشهر المالية
+        $fiscalMonthPermissions = [
+            [
+                'name' => 'close-fiscal-months',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إغلاق شهر مالي',
+                    'en' => 'Close Fiscal Month'
+                ]
+            ],
+        ];
+
+        // صلاحيات الخزن (الخزائن)
+        $treasuryPermissions = [
+            [
+                'name' => 'view-treasuries',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة الخزن',
+                    'en' => 'View Treasuries'
+                ]
+            ],
+            [
+                'name' => 'create-treasuries',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة خزنة',
+                    'en' => 'Create Treasury'
+                ]
+            ],
+            [
+                'name' => 'edit-treasuries',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل خزنة',
+                    'en' => 'Edit Treasury'
+                ]
+            ],
+            [
+                'name' => 'delete-treasuries',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف خزنة',
+                    'en' => 'Delete Treasury'
+                ]
+            ],
+            [
+                'name' => 'set-main-treasuries',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعيين خزنة رئيسية',
+                    'en' => 'Set Main Treasury'
                 ]
             ],
         ];
@@ -286,7 +365,10 @@ class PermissionsSeeder extends Seeder
             $countryPermissions,
             $cityPermissions,
             $villagePermissions,
-            $companyPermissions
+            $companyPermissions,
+            $fiscalYearPermissions,
+            $fiscalMonthPermissions,
+            $treasuryPermissions
         );
 
         // إنشاء الصلاحيات

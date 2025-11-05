@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained('countries')->cascadeOnDelete();
-            $table->decimal('delivery_price', 10, 2)->default(0);
+            $table->decimal('delivery_price', 10, 2)->default(20);
             $table->timestamps();
         });
     }

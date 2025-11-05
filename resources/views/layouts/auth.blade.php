@@ -19,7 +19,7 @@
     <!-- زر تبديل اللغة عائم -->
     <div class="position-fixed top-0 start-0 p-3" style="z-index: 1050;">
         @php $nextLocale = app()->getLocale() === 'ar' ? 'en' : 'ar'; @endphp
-        <a href="{{ LaravelLocalization::getLocalizedURL($nextLocale, null, [], true) }}" class="btn btn-light btn-sm rounded-circle shadow" title="{{ $nextLocale === 'ar' ? 'العربية' : 'English' }}" aria-label="toggle-language">
+        <a href="{{ LaravelLocalization::getLocalizedURL($nextLocale, null, [], true) }}" class="btn btn-light btn-sm rounded-circle shadow" title="{{ $nextLocale === 'ar' ? __('language.ar') : __('language.en') }}" aria-label="toggle-language">
             <i class="bi bi-translate"></i>
         </a>
     </div>

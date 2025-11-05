@@ -2,7 +2,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="card-title mb-0">المحافظات</h5>
+                <h5 class="card-title mb-0">{{ __('cities.palestine_title') }}</h5>
                 <div class="d-flex align-items-center gap-2">
                     <input type="text" class="form-control form-control-sm" placeholder="{{ __('cities.search') }}" wire:model.live="search" style="max-width: 220px;">
                 </div>

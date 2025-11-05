@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'قرى فلسطين')
+@section('title', __('villages.palestine_title'))
 
 @section('content')
 <div class="container py-3">

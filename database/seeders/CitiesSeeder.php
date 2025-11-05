@@ -66,7 +66,7 @@ class CitiesSeeder extends Seeder
             // إنشاء مدينة جديدة مع الترجمات
             $city = new City();
             $city->country_id = $palestine->id;
-            $city->delivery_price = 0; // سعر افتراضي
+            $city->delivery_price = 20; // سعر افتراضي
             $city->translateOrNew('ar')->name = $arName;
             $city->translateOrNew('en')->name = $enName;
             $city->save();

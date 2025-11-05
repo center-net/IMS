@@ -16,6 +16,11 @@ class RoleForm extends Component
     public $selectedPermissionsBackup = [];
     public $showPermissionsModal = false;
     public $permissionSearch = '';
+    public $collapsedModules = [];
+    // Collapse all modules by default when opening permissions modal
+    public $collapseAll = true;
+    // المجموعة النشطة المفتوحة حاليًا في نمط الأكورديون
+    public $activeModule = null;
 
     protected $listeners = ['editRole' => 'loadRole'];
 
@@ -164,6 +169,11 @@ class RoleForm extends Component
         }
         // احتفظ بنسخة من الاختيارات الحالية لاسترجاعها عند الإلغاء
         $this->selectedPermissionsBackup = $this->selectedPermissions;
+        // افتراضيًا تكون جميع المجموعات مطوية
+        // افتح مجموعة إعدادات الشركة افتراضيًا وأطوِ البقية بمنطق الأكورديون
+        $this->collapseAll = false;
+        $this->collapsedModules = [];
+        $this->activeModule = 'companies';
         $this->showPermissionsModal = true;
     }
 
@@ -177,6 +187,10 @@ class RoleForm extends Component
         // تنظيف الأخطاء عند إغلاق النافذة
         $this->resetErrorBag();
         $this->resetValidation();
+        // إعادة الطيّ الافتراضي
+        $this->collapseAll = true;
+        $this->collapsedModules = [];
+        $this->activeModule = null;
     }
 
     public function applyPermissions()
@@ -203,6 +217,10 @@ class RoleForm extends Component
         $this->showPermissionsModal = false;
         $this->permissionSearch = '';
         $this->selectedPermissionsBackup = [];
+        // إعادة الطيّ الافتراضي بعد الحفظ
+        $this->collapseAll = true;
+        $this->collapsedModules = [];
+        $this->activeModule = null;
     }
 
     /**
@@ -225,5 +243,52 @@ class RoleForm extends Component
             // Select all module permissions
             $this->selectedPermissions = array_values(array_unique(array_merge($current, $moduleIds)));
         }
+    }
+
+    /**
+     * Toggle selection for all permissions at once (across all modules).
+     */
+    public function toggleAll(array $allPermissionIds)
+    {
+        $allIds = array_map('intval', $allPermissionIds);
+        $current = array_map('intval', $this->selectedPermissions ?? []);
+        $alreadySelectedCount = count(array_intersect($allIds, $current));
+        $allSelected = $alreadySelectedCount === count($allIds) && count($allIds) > 0;
+
+        if ($allSelected) {
+            // Deselect all
+            $this->selectedPermissions = array_values(array_diff($current, $allIds));
+        } else {
+            // Select all
+            $this->selectedPermissions = array_values(array_unique(array_merge($current, $allIds)));
+        }
+    }
+
+    /** Always select all permissions */
+    public function selectAll(array $allPermissionIds)
+    {
+        $allIds = array_map('intval', $allPermissionIds);
+        $current = array_map('intval', $this->selectedPermissions ?? []);
+        $this->selectedPermissions = array_values(array_unique(array_merge($current, $allIds)));
+    }
+
+    /** Always clear all permissions */
+    public function clearAll(array $allPermissionIds)
+    {
+        $allIds = array_map('intval', $allPermissionIds);
+        $current = array_map('intval', $this->selectedPermissions ?? []);
+        $this->selectedPermissions = array_values(array_diff($current, $allIds));
+    }
+
+    /**
+     * Collapse/expand a module group in the permissions UI.
+     */
+    public function toggleCollapseModule(string $module)
+    {
+        // نمط أكورديون بسيط: افتح المجموعة الحالية واطوِ البقية من خلال activeModule
+        $this->collapseAll = false;
+        $this->activeModule = $module;
+        // لا حاجة لإدارة قائمة المطويات، فشرط العرض يعتمد على activeModule
+        $this->collapsedModules = [];
     }
 }

@@ -10,7 +10,7 @@
     <div class="alert alert-warning" role="alert">
         <div class="d-flex align-items-center mb-2">
             <i class="bi-exclamation-triangle me-2"></i>
-            <strong>تحقق من البيانات التالية:</strong>
+            <strong>{{ __('alerts.check_data') }}</strong>
         </div>
         <ul class="mb-0">
             @foreach($errors->all() as $error)
@@ -19,4 +19,3 @@
         </ul>
     </div>
 @endif
-
