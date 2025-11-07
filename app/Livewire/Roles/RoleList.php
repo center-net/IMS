@@ -79,6 +79,7 @@ class RoleList extends Component
             ->when($this->search, function ($q) {
                 $q->whereTranslationLike('display_name', "%{$this->search}%");
             })
+            ->withCount('users')
             ->orderByDesc('id');
 
         $roles = $query->paginate($this->perPage);

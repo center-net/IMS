@@ -13,7 +13,7 @@ return [
 
     'attributes' => [
         'name' => 'الاسم',
-        'username' => 'اسم المستخدم',
+        'username' => 'اسم الموظف',
         'email' => 'البريد الإلكتروني',
         'password' => 'كلمة المرور',
         'phone' => 'رقم الهاتف',

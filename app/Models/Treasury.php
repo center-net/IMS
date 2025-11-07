@@ -21,6 +21,8 @@ class Treasury extends Model
     protected $fillable = [
         'code',
         'is_main',
+        'main_treasury_id',
+        'manager_id',
         'status',
     ];
 
@@ -38,15 +40,6 @@ class Treasury extends Model
                 $tr->status = 'open';
             }
         });
-
-        static::saved(function (Treasury $tr) {
-            // Ensure only one main treasury at a time
-            if ($tr->is_main) {
-                self::query()
-                    ->where('id', '!=', $tr->id)
-                    ->update(['is_main' => false]);
-            }
-        });
     }
 
     private static function generateUniqueCode(): string
@@ -55,5 +48,13 @@ class Treasury extends Model
             $candidate = 'TR-' . str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::query()->where('code', $candidate)->exists());
         return $candidate;
+    }
+
+    /**
+     * The employee (user) assigned as this treasury's manager.
+     */
+    public function manager(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'manager_id');
     }
 }

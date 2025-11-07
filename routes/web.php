@@ -37,7 +37,7 @@ Route::group(
             ->middleware(['auth', 'can:view-users']);
 
         // Roles & Permissions management (protected by permissions)
-        Route::view('/roles', 'roles.index')
+        Route::view('/employee-tasks', 'roles.index')
             ->name('roles.index')
             ->middleware(['auth', 'can:view-roles']);
         Route::view('/permissions', 'permissions.index')
@@ -88,6 +88,11 @@ Route::group(
         Route::view('/settings/treasuries', 'treasuries.index')
             ->name('treasuries.index')
             ->middleware(['auth', 'can:view-treasuries']);
+
+        // Offers management (protected by permissions)
+        Route::view('/settings/offers', 'offers.index')
+            ->name('offers.index')
+            ->middleware(['auth', 'can:view-offers']);
 
         // System Logs (protected by permissions)
         Route::view('/logs', 'logs.index')

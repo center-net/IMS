@@ -1,15 +1,20 @@
 <div class="card shadow-sm">
-    <div class="card-body">
-        <h5 class="card-title mb-3">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
             {{ $roleId ? __('roles.edit_title') : __('roles.create_title') }}
         </h5>
+    </div>
+    <div class="card-body">
 
         {{-- تم إخفاء حقل المعرف، يُولّد تلقائياً من الاسم الظاهر كـ slug --}}
 
         <div class="mb-3">
             <label class="form-label">{{ __('roles.display_name') }}</label>
-            <input type="text" class="form-control @error('display_name') is-invalid @enderror" wire:model.defer="display_name">
-            @error('display_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                <input type="text" class="form-control @error('display_name') is-invalid @enderror" wire:model.defer="display_name" placeholder="{{ __('roles.display_name') }}">
+                @error('display_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
         </div>
 
         <div class="mb-3">
@@ -32,13 +37,17 @@
                     'villages' => __('roles.groups.villages'),
                     'fiscal-years' => __('roles.groups.fiscal-years'),
                     'fiscal-months' => __('roles.groups.fiscal-months'),
+                    'treasuries' => __('roles.groups.treasuries'),
+                    'offers' => __('roles.groups.offers'),
+                    'main' => __('roles.groups.main'),
                     'other' => __('roles.groups.other'),
                 ];
                 $grouped = [];
                 $allIds = [];
                 foreach ($permissions as $perm) {
                     $parts = explode('-', $perm->name);
-                    $module = $parts[1] ?? 'other';
+                    // اعتبر اسم المجموعة هو كامل الجزء بعد الفعل (يضم المركبات مثل fiscal-years, main-treasuries)
+                    $module = count($parts) > 1 ? implode('-', array_slice($parts, 1)) : 'other';
                     $grouped[$module][] = $perm;
                     $allIds[] = $perm->id;
                 }
@@ -46,6 +55,10 @@
                 $orderedModules = array_keys($groupMap);
                 foreach ($grouped as $module => $items) {
                     if (!in_array($module, $orderedModules)) {
+                        // خرائط إلى مجموعات معروفة عند الحاجة
+                        if ($module === 'main-treasuries') {
+                            $module = 'treasuries';
+                        }
                         $orderedModules[] = $module;
                     }
                 }

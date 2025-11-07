@@ -1,18 +1,24 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('treasuries.form_title') }}</h5>
+            <h5 class="mb-1">
+                {{ $editing ? __('treasuries.form_edit_title') : __('treasuries.form_add_title') }}
+            </h5>
+            
         </div>
         <div class="card-body">
             <form wire:submit.prevent="submit">
                 <div class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-12">
                         <label class="form-label">{{ __('treasuries.name') }}</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.defer="name">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.defer="name" placeholder="{{ __('treasuries.name_placeholder') }}">
+                        </div>
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-12">
                         <label class="form-label">{{ __('treasuries.is_main') }}</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="is_main" wire:model.live="is_main">
@@ -23,47 +29,76 @@
                     </div>
 
                     @if(!$is_main)
-                        <div class="col-md-4">
+                        <div class="col-12">
                             <label class="form-label">{{ __('treasuries.main_treasuries') }}</label>
-                            <div class="dropdown w-100">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ __('treasuries.main_treasuries') }}
-                                </button>
-                                <div class="dropdown-menu p-2 w-100" style="max-height: 300px; overflow:auto;">
+                            {{-- عرض اسم الخزنة الرئيسية المختارة أعلى القائمة --}}
+                            @php
+                                $selectedMain = null;
+                                if(!empty($selectedMainTreasuryId)) {
+                                    $selectedMain = $mainTreasuries->firstWhere('id', (int) $selectedMainTreasuryId);
+                                }
+                            @endphp
+                            @if($selectedMain)
+                                <div class="mb-2">
+                                    <span class="badge bg-info">
+                                        {{ optional($selectedMain->translate(app()->getLocale()))->name ?? $selectedMain->code }}
+                                    </span>
+                                </div>
+                            @endif
+                            <div class="border rounded-3 p-3 bg-light">
+                                <select class="form-select @error('selectedMainTreasuryId') is-invalid @enderror" wire:model.live="selectedMainTreasuryId">
+                                    <option value="">-- {{ __('treasuries.main_treasuries') }} --</option>
                                     @forelse($mainTreasuries as $mt)
                                         @php $translated = optional($mt->translate(app()->getLocale()))->name; @endphp
-                                        <span class="dropdown-item text-muted">{{ $translated ?? $mt->code }}</span>
+                                        <option value="{{ $mt->id }}">{{ $translated ?? $mt->code }}</option>
                                     @empty
-                                        <span class="dropdown-item disabled">{{ __('treasuries.empty') }}</span>
+                                        <option value="" disabled>{{ __('treasuries.empty') }}</option>
                                     @endforelse
-                                </div>
+                                </select>
+                                @error('selectedMainTreasuryId')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
                     @endif
 
-                    @if($editing)
-                        <div class="col-md-4">
-                            <label class="form-label">{{ __('treasuries.status') }}</label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="statusSwitch"
-                                       @checked($status === 'open')
-                                       wire:change="$set('status', $event.target.checked ? 'open' : 'closed')">
-                                <label class="form-check-label" for="statusSwitch">
-                                    {{ $status === 'open' ? __('treasuries.open') : __('treasuries.closed') }}
-                                </label>
+                    <div class="col-12">
+                        <label class="form-label">{{ __('treasuries.manager_name') }}</label>
+                        @php
+                            $selectedManager = null;
+                            if(!empty($manager_id)) {
+                                $selectedManager = $employees->firstWhere('id', (int) $manager_id);
+                            }
+                        @endphp
+                        @if($selectedManager)
+                            <div class="mb-2">
+                                <span class="badge bg-info">
+                                    {{ optional($selectedManager->translate(app()->getLocale()))->name ?? $selectedManager->username }}
+                                </span>
                             </div>
-                            @error('status')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
-                            <div class="form-text">{{ __('treasuries.status_hint') }}</div>
+                        @endif
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                            <select class="form-select @error('manager_id') is-invalid @enderror" wire:model.live="manager_id">
+                                <option value="">-- {{ __('treasuries.select_manager') }} --</option>
+                                @forelse($employees as $emp)
+                                    @php $empName = optional($emp->translate(app()->getLocale()))->name ?? $emp->username; @endphp
+                                    <option value="{{ $emp->id }}">{{ $empName }}</option>
+                                @empty
+                                @endforelse
+                            </select>
                         </div>
-                    @endif
+                        @error('manager_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        
+                    </div>
+
+                    {{-- حالة الخزنة محذوفة من نموذج التعديل حسب الطلب --}}
                 </div>
 
-                <div class="mt-3">
+                <div class="mt-3 d-flex align-items-center">
                     <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-check2"></i> {{ $editing ? __('treasuries.update') : __('treasuries.create') }}
+                        <i class="bi bi-check2 me-1"></i> {{ $editing ? __('treasuries.update') : __('treasuries.create') }}
                     </button>
-                    <button class="btn btn-secondary ms-2" type="button" wire:click="cancel">
-                        <i class="bi bi-x-circle"></i> {{ __('treasuries.cancel') }}
+                    <button class="btn btn-outline-secondary ms-2" type="button" wire:click="cancel">
+                        <i class="bi bi-x-circle me-1"></i> {{ __('treasuries.cancel') }}
                     </button>
                 </div>
             </form>

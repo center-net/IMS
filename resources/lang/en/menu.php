@@ -19,7 +19,7 @@ return [
     'fiscal_months' => 'Fiscal Months',
     'treasuries' => 'Treasury Management',
     'warehouses' => 'Warehouse Management',
-    'manufacturing_lines' => 'Manufacturing Lines',
+    'manufacturing_lines' => 'Offers',
     'employee_grades' => 'Employee Grades',
     'employee_data' => 'Employee Data',
     'attendance_log' => 'Attendance Log',

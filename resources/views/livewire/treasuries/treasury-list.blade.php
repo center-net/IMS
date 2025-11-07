@@ -17,6 +17,7 @@
                     <tr>
                         <th>{{ __('treasuries.code') }}</th>
                         <th>{{ __('treasuries.name') }}</th>
+                        <th>{{ __('treasuries.manager_name') }}</th>
                         <th>{{ __('treasuries.is_main') }}</th>
                         <th>{{ __('treasuries.status') }}</th>
                         <th class="text-end">{{ __('treasuries.action') }}</th>
@@ -28,10 +29,17 @@
                             <td>{{ $tr->code }}</td>
                             <td>{{ optional($tr->translate(app()->getLocale()))->name ?? $tr->code }}</td>
                             <td>
+                                {{ optional(optional($tr->manager)->translate(app()->getLocale()))->name ?? ($tr->manager->username ?? '-') }}
+                            </td>
+                            <td>
                                 @if($tr->is_main)
                                     <span class="badge bg-success">{{ __('treasuries.main_yes') }}</span>
                                 @else
                                     <span class="badge bg-secondary">{{ __('treasuries.main_no') }}</span>
+                                    @php $mainName = isset($mainNames) ? $mainNames->get($tr->main_treasury_id) : null; @endphp
+                                    @if(!empty($mainName))
+                                        <small class="text-muted ms-1">{{ $mainName }}</small>
+                                    @endif
                                 @endif
                             </td>
                             <td>
@@ -51,9 +59,6 @@
                                     </button>
                                     <button class="btn btn-outline-danger" onclick="return confirm('{{ __('treasuries.delete_confirm') }}')" wire:click="delete({{ $tr->id }})">
                                         <i class="bi bi-trash"></i> {{ __('treasuries.delete') }}
-                                    </button>
-                                    <button class="btn btn-outline-primary" wire:click="makeMain({{ $tr->id }})" @disabled($tr->is_main)>
-                                        <i class="bi bi-patch-check"></i> {{ __('treasuries.set_main') }}
                                     </button>
                                 </div>
                             </td>

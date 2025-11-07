@@ -356,6 +356,42 @@ class PermissionsSeeder extends Seeder
             ],
         ];
 
+        // صلاحيات العروض
+        $offerPermissions = [
+            [
+                'name' => 'view-offers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة العروض',
+                    'en' => 'View Offers'
+                ]
+            ],
+            [
+                'name' => 'create-offers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة عرض',
+                    'en' => 'Create Offer'
+                ]
+            ],
+            [
+                'name' => 'edit-offers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل عرض',
+                    'en' => 'Edit Offer'
+                ]
+            ],
+            [
+                'name' => 'delete-offers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف عرض',
+                    'en' => 'Delete Offer'
+                ]
+            ],
+        ];
+
         // دمج جميع الصلاحيات
         $allPermissions = array_merge(
             $userPermissions,
@@ -368,7 +404,8 @@ class PermissionsSeeder extends Seeder
             $companyPermissions,
             $fiscalYearPermissions,
             $fiscalMonthPermissions,
-            $treasuryPermissions
+            $treasuryPermissions,
+            $offerPermissions
         );
 
         // إنشاء الصلاحيات

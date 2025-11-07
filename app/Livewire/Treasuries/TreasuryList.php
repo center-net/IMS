@@ -78,7 +78,7 @@ class TreasuryList extends Component
 
     public function render()
     {
-        $query = Treasury::query()->with('translations');
+        $query = Treasury::query()->with(['translations', 'manager', 'manager.translations']);
         if ($this->search) {
             $term = $this->search;
             $query->where(function ($q) use ($term) {
@@ -89,8 +89,19 @@ class TreasuryList extends Component
             });
         }
 
+        // Build a map of main treasury id -> display name to annotate sub-treasuries
+        $mainNames = Treasury::query()
+            ->with('translations')
+            ->where('is_main', true)
+            ->get()
+            ->mapWithKeys(function ($t) {
+                $translated = optional($t->translate(app()->getLocale()))->name;
+                return [$t->id => ($translated ?? $t->code)];
+            });
+
         return view('livewire.treasuries.treasury-list', [
             'treasuries' => $query->orderByDesc('created_at')->paginate($this->perPage),
+            'mainNames' => $mainNames,
         ]);
     }
 }

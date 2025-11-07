@@ -2,8 +2,8 @@
 
 return [
     'management' => 'الإدارة',
-    'users' => 'إدارة المستخدمين',
-    'roles' => 'إدارة الأدوار',
+    'users' => 'إدارة الموظفين',
+    'roles' => 'مهام الموظفين',
     'permissions' => 'إدارة الصلاحيات',
     'address' => 'العنوان',
     'countries' => 'الدول',
@@ -19,8 +19,9 @@ return [
     'fiscal_months' => 'الأشهر المالية',
     'treasuries' => 'إدارة الخزائن',
     'warehouses' => 'إدارة الخزن',
-    'manufacturing_lines' => 'خطوط التصنيع',
-    'employee_grades' => 'درجات الموظفين',
+    'offers' => 'العروض',
+    'manufacturing_lines' => 'خطوط الإنتاج',
+    'employee_grades' => 'مهام الموظفين',
     'employee_data' => 'بيانات الموظفين',
     'attendance_log' => 'سجل الحضور و الانصراف',
     'rewards' => 'المكافئات',

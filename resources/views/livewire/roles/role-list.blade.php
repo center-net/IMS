@@ -14,7 +14,7 @@
                             <th>#</th>
                             <th>{{ __('roles.display_name') }}</th>
                             <th>{{ __('roles.permissions') }}</th>
-                            <th class="text-nowrap">{{ __('roles.updated') }}</th>
+                            <th class="text-nowrap">{{ __('roles.users_count') }}</th>
                             <th class="text-end">{{ __('roles.actions') }}</th>
                         </tr>
                     </thead>
@@ -29,7 +29,7 @@
                                 {{ $translated ?? ($role->display_name ?? $role->name) }}
                             </td>
                             <td>{{ $role->permissions()->count() }}</td>
-                            <td>{{ $role->updated_at?->format('Y-m-d H:i') }}</td>
+                            <td>{{ number_format($role->users_count ?? 0) }}</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $role->id }})"><i class="bi-pencil"></i> {{ __('roles.edit') }}</button>
                                 <button class="btn btn-sm btn-outline-danger" wire:click="confirmDelete({{ $role->id }})"><i class="bi-trash"></i> {{ __('roles.delete') }}</button>

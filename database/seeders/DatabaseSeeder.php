@@ -12,6 +12,7 @@ use Database\Seeders\CountriesSeeder;
 use Database\Seeders\CitiesSeeder;
 use Database\Seeders\VillagesSeeder;
 use Database\Seeders\CompaniesSeeder;
+use Database\Seeders\OffersSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -51,5 +52,8 @@ class DatabaseSeeder extends Seeder
 
         // إدراج خزنة افتراضية (الخزائن)
         $this->call(TreasuriesSeeder::class);
+
+        // إدراج عروض تجريبية (متعدد اللغات)
+        $this->call(OffersSeeder::class);
     }
 }
