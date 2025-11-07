@@ -2,8 +2,8 @@
 
 return [
     'management' => 'Management',
-    'users' => 'Users Management',
-    'roles' => 'Roles Management',
+    'users' => 'Employee Management',
+    'roles' => 'Employee Tasks',
     'permissions' => 'Permissions Management',
     'address' => 'Address',
     'countries' => 'Countries',

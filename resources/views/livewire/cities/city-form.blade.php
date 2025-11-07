@@ -39,12 +39,20 @@
                     @error('delivery_price')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 
-                <div class="d-flex gap-2 mt-3">
+            <div class="d-flex gap-2 mt-3">
+                @if($cityId)
                     <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-check2"></i> {{ $cityId ? __('cities.update') : __('cities.create') }}
+                        <i class="bi bi-check2"></i> {{ __('cities.update') }}
                     </button>
-                    <button class="btn btn-secondary" type="button" wire:click="cancel"><i class="bi-arrow-counterclockwise"></i> {{ __('cities.cancel') }}</button>
-                </div>
+                @else
+                    @can('create-cities')
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-check2"></i> {{ __('cities.create') }}
+                        </button>
+                    @endcan
+                @endif
+                <button class="btn btn-secondary" type="button" wire:click="cancel"><i class="bi-arrow-counterclockwise"></i> {{ __('cities.cancel') }}</button>
+            </div>
             </form>
         </div>
     </div>

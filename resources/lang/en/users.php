@@ -2,7 +2,7 @@
 
 return [
     // Titles and headers
-    'title' => 'Users',
+    'title' => 'Employees',
     'actions' => 'Actions',
     'updated' => 'Updated',
 
@@ -14,11 +14,13 @@ return [
     'email' => 'Email',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'details' => 'Details',
+    'change_password' => 'Change Password',
     'no_results' => 'No results',
 
     // Form
-    'edit_user' => 'Edit User',
-    'create_user' => 'Create User',
+    'edit_user' => 'Edit Employee',
+    'create_user' => 'Create Employee',
     'password' => 'Password',
     'password_keep_hint' => 'Leave blank to keep current password',
     'update' => 'Update',
@@ -32,12 +34,12 @@ return [
     'cancel' => 'Cancel',
 
     // Notifications and operation messages
-    'deleted' => 'User deleted',
-    'not_found' => 'User not found',
-    'delete_failed' => 'Failed to delete user',
-    'created' => 'User created',
-    'updated_success' => 'User updated',
-    'save_failed' => 'Failed to save user',
+    'deleted' => 'Employee deleted',
+    'not_found' => 'Employee not found',
+    'delete_failed' => 'Failed to delete employee',
+    'created' => 'Employee created',
+    'updated_success' => 'Employee updated',
+    'save_failed' => 'Failed to save employee',
     'unauthorized' => 'You are not authorized to perform this action',
     'cancelled' => 'Operation cancelled',
 ];

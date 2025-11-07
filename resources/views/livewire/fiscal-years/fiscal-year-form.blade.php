@@ -1,4 +1,5 @@
 <div>
+    @can('create-fiscal-years')
     <div class="card shadow-sm">
         <div class="card-header">
             <h5 class="mb-0">{{ __('fiscal_years.form_title') }}</h5>
@@ -48,4 +49,5 @@
             </form>
         </div>
     </div>
+    @endcan
 </div>

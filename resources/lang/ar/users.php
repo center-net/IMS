@@ -8,12 +8,14 @@ return [
 
     // Table columns and UI labels
     'search' => 'بحث',
-    'name' => 'الاسم',
-    'username' => 'اسم الموظف',
+    'name' => 'اسم الموظف',
+    'username' => 'اسم المستخدم',
     'phone' => 'رقم الهاتف',
     'email' => 'البريد الإلكتروني',
     'edit' => 'تعديل',
     'delete' => 'حذف',
+    'details' => 'التفاصيل',
+    'change_password' => 'تغيير كلمة المرور',
     'no_results' => 'لا توجد نتائج',
 
     // Form

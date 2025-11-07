@@ -9,7 +9,9 @@
             @livewire('villages.palestine-village-list')
         </div>
         <div class="col-12 col-lg-4">
-            @livewire('villages.palestine-village-form')
+            @canany(['create-villages', 'edit-villages'])
+                @livewire('villages.palestine-village-form')
+            @endcanany
         </div>
     </div>
 </div>

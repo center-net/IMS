@@ -3,6 +3,7 @@
 namespace App\Livewire\Users;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,9 +14,28 @@ class UserList extends Component
     public $search = '';
     public $perPage = 10;
     public $pendingDeleteId = null;
+    public $passwordUserId = null;
+    public $newPassword = '';
     protected $paginationTheme = 'bootstrap';
+    // حالة التفويض للوصول إلى قائمة إدارة الموظفين
+    public bool $authorized = false;
 
     protected $listeners = ['userSaved' => '$refresh'];
+
+    public function mount()
+    {
+        // السماح بالوصول إذا امتلك المستخدم واحدة من صلاحيات العرض/التعديل/الحذف/تغيير كلمة المرور
+        $this->authorized = (bool) (
+            auth()->user()?->can('view-users') ||
+            auth()->user()?->can('edit-users') ||
+            auth()->user()?->can('delete-users') ||
+            auth()->user()?->can('change-user-passwords') ||
+            auth()->user()?->can('create-users')
+        );
+        if (!$this->authorized) {
+            abort(403);
+        }
+    }
 
     public function updatingSearch()
     {
@@ -29,6 +49,55 @@ class UserList extends Component
             return;
         }
         $this->dispatch('editUser', $id);
+    }
+
+    public function details($id)
+    {
+        if (!auth()->user()?->can('view-user-profiles')) {
+            $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
+            return;
+        }
+        $this->dispatch('showUserDetails', $id);
+    }
+
+    public function changePassword($id)
+    {
+        if (!auth()->user()?->can('change-user-passwords')) {
+            $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
+            return;
+        }
+        // جهّز مودال تغيير كلمة المرور فقط
+        $this->passwordUserId = $id;
+        $this->newPassword = '';
+        $this->resetErrorBag();
+        $this->resetValidation();
+        $this->dispatch('showPasswordModal');
+    }
+
+    public function savePassword()
+    {
+        if (!auth()->user()?->can('change-user-passwords')) {
+            $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
+            return;
+        }
+        $data = $this->validate([
+            'newPassword' => ['required', 'string', 'min:6'],
+        ]);
+        try {
+            $user = User::find($this->passwordUserId);
+            if (!$user) {
+                $this->dispatch('notify', type: 'warning', message: __('users.not_found'));
+                return;
+            }
+            $user->password = Hash::make($data['newPassword']);
+            $user->save();
+            $this->dispatch('notify', type: 'success', message: __('users.updated_success'));
+            $this->dispatch('hidePasswordModal');
+            $this->passwordUserId = null;
+            $this->newPassword = '';
+        } catch (\Throwable $e) {
+            $this->dispatch('notify', type: 'danger', message: __('users.save_failed'));
+        }
     }
 
     public function confirmDelete($id)

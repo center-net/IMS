@@ -14,8 +14,24 @@ class RoleList extends Component
     public $perPage = 10;
     public $pendingDeleteId = null;
     protected $paginationTheme = 'bootstrap';
+    // حالة التفويض للوصول إلى القائمة
+    public bool $authorized = false;
 
     protected $listeners = ['roleSaved' => '$refresh'];
+
+    public function mount()
+    {
+        // السماح بالوصول إذا كان المستخدم يمتلك صلاحية عرض المهام أو أي صلاحية إدارية مرتبطة بها
+        $this->authorized = (bool) (
+            auth()->user()?->can('view-roles') ||
+            auth()->user()?->can('edit-roles') ||
+            auth()->user()?->can('delete-roles') ||
+            auth()->user()?->can('create-roles')
+        );
+        if (!$this->authorized) {
+            abort(403);
+        }
+    }
 
     public function updatingSearch()
     {

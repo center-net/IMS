@@ -6,10 +6,11 @@
         <div class="col-lg-7 mb-3">
             @livewire('fiscal-years.fiscal-year-list')
         </div>
-        <div class="col-lg-5 mb-3">
-            @livewire('fiscal-years.fiscal-year-form')
-        </div>
+        @can('create-fiscal-years')
+            <div class="col-lg-5 mb-3">
+                @livewire('fiscal-years.fiscal-year-form')
+            </div>
+        @endcan
     </div>
 </div>
 @endsection
-

@@ -3,9 +3,13 @@
         {{ __('menu.management') }}
     </a>
     <ul class="dropdown-menu" aria-labelledby="managementDropdown">
-        <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="bi-people me-1"></i> {{ __('menu.users') }}</a></li>
-        <li><a class="dropdown-item" href="{{ route('roles.index') }}"><i class="bi-shield-lock me-1"></i> {{ __('menu.roles') }}</a></li>
-        <li><a class="dropdown-item" href="{{ route('permissions.index') }}"><i class="bi-key me-1"></i> {{ __('menu.permissions') }}</a></li>
+        @can('view-users')
+            <li><a class="dropdown-item" href="{{ route('users.index') }}"><i class="bi-people me-1"></i> {{ __('menu.users') }}</a></li>
+        @endcan
+        @can('view-roles')
+            <li><a class="dropdown-item" href="{{ route('roles.index') }}"><i class="bi-shield-lock me-1"></i> {{ __('menu.roles') }}</a></li>
+        @endcan
+        {{-- Permissions menu removed: management via seeders/commands only --}}
         <li><hr class="dropdown-divider"></li>
         <li><h6 class="dropdown-header">{{ __('menu.address') }}</h6></li>
         <li><a class="dropdown-item" href="{{ route('countries.index') }}"><i class="bi-geo-alt me-1"></i> {{ __('menu.countries') }}</a></li>
@@ -22,4 +26,3 @@
         <li><a class="dropdown-item" href="#"><i class="bi-receipt me-1"></i> {{ __('menu.tax_settings') }}</a></li>
     </ul>
 </li>
-

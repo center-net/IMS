@@ -8,10 +8,11 @@
         <div class="col-12 col-lg-8">
             @livewire('roles.role-list')
         </div>
-        <div class="col-12 col-lg-4">
-            @livewire('roles.role-form')
-        </div>
+        @canany(['create-roles','edit-roles'])
+            <div class="col-12 col-lg-4">
+                @livewire('roles.role-form')
+            </div>
+        @endcanany
     </div>
 </div>
 @endsection
-

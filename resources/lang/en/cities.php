@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Cities',
+    'palestine_title' => 'Palestine Cities',
     'search' => 'Search cities...',
     'filter_country' => 'Filter by country',
     'name' => 'Name',
@@ -14,6 +15,7 @@ return [
     'empty' => 'No cities found.',
     'per_page' => 'Per page',
     'form_title' => 'City Form',
+    'palestine_form_title' => 'Palestine City Form',
     'create' => 'Create',
     'update' => 'Update',
     'save' => 'Save',
@@ -31,4 +33,3 @@ return [
     'cancel' => 'Cancel',
     'cancelled' => 'Operation cancelled',
 ];
-

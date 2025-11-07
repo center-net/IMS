@@ -30,7 +30,7 @@ class PermissionsSeeder extends Seeder
                 'name' => 'view-users',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'مشاهدة المستخدمين',
+                    'ar' => 'مشاهدة الموظفين',
                     'en' => 'View Users'
                 ]
             ],
@@ -38,7 +38,7 @@ class PermissionsSeeder extends Seeder
                 'name' => 'create-users',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'إضافة مستخدم',
+                    'ar' => 'إضافة موظف',
                     'en' => 'Create User'
                 ]
             ],
@@ -46,7 +46,7 @@ class PermissionsSeeder extends Seeder
                 'name' => 'edit-users',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'تعديل مستخدم',
+                    'ar' => 'تعديل موظف',
                     'en' => 'Edit User'
                 ]
             ],
@@ -54,44 +54,60 @@ class PermissionsSeeder extends Seeder
                 'name' => 'delete-users',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'حذف مستخدم',
+                    'ar' => 'حذف موظف',
                     'en' => 'Delete User'
+                ]
+            ],
+            [
+                'name' => 'view-user-profiles',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'رؤية ملفات الموظفين',
+                    'en' => 'View Employee Profiles'
+                ]
+            ],
+            [
+                'name' => 'change-user-passwords',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تغيير كلمات مرور الموظفين',
+                    'en' => 'Change User Passwords'
                 ]
             ],
         ];
 
-        // صلاحيات الأدوار
+        // صلاحيات مهام الموظفين (بدلاً من الأدوار)
         $rolePermissions = [
             [
                 'name' => 'view-roles',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'مشاهدة الأدوار',
-                    'en' => 'View Roles'
+                    'ar' => 'مشاهدة مهام الموظفين',
+                    'en' => 'View Employee Tasks'
                 ]
             ],
             [
                 'name' => 'create-roles',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'إضافة دور',
-                    'en' => 'Create Role'
+                    'ar' => 'إضافة مهمة موظف',
+                    'en' => 'Create Employee Task'
                 ]
             ],
             [
                 'name' => 'edit-roles',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'تعديل دور',
-                    'en' => 'Edit Role'
+                    'ar' => 'تعديل مهمة موظف',
+                    'en' => 'Edit Employee Task'
                 ]
             ],
             [
                 'name' => 'delete-roles',
                 'guard_name' => 'web',
                 'display_name' => [
-                    'ar' => 'حذف دور',
-                    'en' => 'Delete Role'
+                    'ar' => 'حذف مهمة موظف',
+                    'en' => 'Delete Employee Task'
                 ]
             ],
         ];
@@ -128,6 +144,14 @@ class PermissionsSeeder extends Seeder
                 'display_name' => [
                     'ar' => 'حذف صلاحية',
                     'en' => 'Delete Permission'
+                ]
+            ],
+            [
+                'name' => 'manage-role-permissions',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إدارة صلاحيات مهام الموظفين',
+                    'en' => 'Manage Role Permissions'
                 ]
             ],
         ];

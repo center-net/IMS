@@ -32,17 +32,21 @@ Route::group(
         })->name('dashboard')->middleware('auth');
 
         // Users management (protected by permissions)
-        Route::view('/users', 'users.index')
+        Route::view('/employees', 'users.index')
             ->name('users.index')
             ->middleware(['auth', 'can:view-users']);
+
+        // Employee profile view (protected by view-user-profiles)
+        Route::get('/employees/{user}', function (\App\Models\User $user) {
+            return view('users.show', compact('user'));
+        })->name('users.show')
+          ->middleware(['auth', 'can:view-user-profiles']);
 
         // Roles & Permissions management (protected by permissions)
         Route::view('/employee-tasks', 'roles.index')
             ->name('roles.index')
             ->middleware(['auth', 'can:view-roles']);
-        Route::view('/permissions', 'permissions.index')
-            ->name('permissions.index')
-            ->middleware(['auth', 'can:view-permissions']);
+        // Permissions page removed entirely (managed via seeders/commands only)
 
         // Countries management (protected by permissions)
         Route::view('/countries', 'countries.index')

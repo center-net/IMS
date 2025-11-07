@@ -2,6 +2,7 @@
 
 return [
     'title' => 'المدن',
+    'palestine_title' => 'مدن فلسطين',
     'search' => 'ابحث عن مدينة...',
     'filter_country' => 'تصفية حسب الدولة',
     'name' => 'الاسم',
@@ -14,6 +15,7 @@ return [
     'empty' => 'لا توجد مدن.',
     'per_page' => 'لكل صفحة',
     'form_title' => 'نموذج المدينة',
+    'palestine_form_title' => 'نموذج مدينة فلسطين',
     'create' => 'إنشاء',
     'update' => 'تحديث',
     'save' => 'حفظ',
@@ -31,4 +33,3 @@ return [
     'cancel' => 'إلغاء',
     'cancelled' => 'تم إلغاء العملية',
 ];
-

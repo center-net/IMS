@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class RoleForm extends Component
 {
+    // يمنع الوصول غير المصرّح به على مستوى الخادم
+    public bool $authorized = false;
     public $roleId = null;
     public $name = '';
     public $display_name = '';
@@ -23,6 +25,16 @@ class RoleForm extends Component
     public $activeModule = null;
 
     protected $listeners = ['editRole' => 'loadRole'];
+
+    public function mount()
+    {
+        // اعتبر المستخدم مخولًا إذا امتلك واحدة من صلاحيات الإنشاء أو التعديل
+        $this->authorized = (bool) (auth()->user()?->can('create-roles') || auth()->user()?->can('edit-roles'));
+        // في حال تضمين المكون مباشرةً دون شرط الواجهة، امنع الوصول تمامًا
+        if (!$this->authorized) {
+            abort(403);
+        }
+    }
 
     protected function rules()
     {
@@ -151,6 +163,13 @@ class RoleForm extends Component
                   ->orWhere('name', 'like', "%{$term}%");
             });
         }
+        // استبعاد صلاحيات إدارة الصلاحيات من العرض داخل مجموعة إدارة مهام الموظفين
+        $permissionsQuery->whereNotIn('name', [
+            'view-permissions',
+            'edit-permissions',
+            'create-permissions',
+            'delete-permissions',
+        ]);
         $permissions = $permissionsQuery->orderBy('name')->get();
         return view('livewire.roles.role-form', [
             'permissions' => $permissions,
@@ -162,7 +181,13 @@ class RoleForm extends Component
         // تنظيف الأخطاء قبل فتح نافذة الصلاحيات
         $this->resetErrorBag();
         $this->resetValidation();
-        if (!auth()->user()?->can('edit-roles')) {
+        $canEdit = auth()->user()?->can('edit-roles');
+        $canCreate = auth()->user()?->can('create-roles');
+        // السماح بفتح النافذة فقط لمن يملك صلاحية إدارة صلاحيات مهام الموظفين
+        $canManagePermissions = auth()->user()?->can('manage-role-permissions');
+        // السماح بفتح النافذة إذا كان تعديل دور قائم (edit-roles) أو إنشاء دور جديد (create-roles)
+        // وبشرط امتلاك صلاحية إدارة الصلاحيات
+        if (!(($canEdit || $canCreate) && $canManagePermissions)) {
             $this->dispatch('notify', type: 'danger', message: __('roles.unauthorized'));
             $this->showPermissionsModal = false;
             return;

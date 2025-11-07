@@ -18,8 +18,23 @@ class UserForm extends Component
     public $phone = '';
     public $password = '';
     public $selectedRoles = [];
+    // حالة التفويض للوصول إلى نموذج إدارة الموظف
+    public bool $authorized = false;
+    public bool $hidden = false;
+    protected $listeners = ['editUser' => 'loadUser', 'hideUserForm' => 'hideForm', 'showUserForm' => 'showForm'];
 
-    protected $listeners = ['editUser' => 'loadUser'];
+    public function mount()
+    {
+        // السماح بالوصول إذا امتلك المستخدم واحدة من صلاحيات: الإنشاء، التعديل، أو تغيير كلمات المرور
+        $this->authorized = (bool) (
+            auth()->user()?->can('create-users') ||
+            auth()->user()?->can('edit-users') ||
+            auth()->user()?->can('change-user-passwords')
+        );
+        if (!$this->authorized) {
+            abort(403);
+        }
+    }
 
     protected function rules()
     {
@@ -36,30 +51,50 @@ class UserForm extends Component
 
     public function save()
     {
+        // نحدّد الصلاحيات المتاحة للمستخدم الحالي
+        $canEdit = auth()->user()?->can('edit-users');
+        $canChangePassword = auth()->user()?->can('change-user-passwords');
         // نفّذ التحقق خارج try/catch حتى لا يُبتلع ويظهر في الحقول
-        $data = $this->validate();
+        $data = null;
+        if ($this->userId) {
+            if ($canEdit) {
+                $data = $this->validate();
+            } elseif ($canChangePassword) {
+                $data = $this->validate([
+                    'password' => ['required', 'string', 'min:6'],
+                ]);
+            } else {
+                $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
+                return;
+            }
+        } else {
+            // حالة الإنشاء تتطلب صلاحية create-users بكامل القواعد
+            $data = $this->validate();
+        }
         try {
 
             if ($this->userId) {
-                if (!auth()->user()?->can('edit-users')) {
-                    $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
-                    return;
-                }
                 $user = User::findOrFail($this->userId);
                 // التقط القيم القديمة قبل التعديل (يشمل الاسم حسب اللغة الحالية والأدوار)
                 $oldName = $user->name; // قيمة مترجمة للغة الحالية
                 $oldRoles = $user->roles()->pluck('name')->toArray();
-                $user->name = $data['name'];
-                $user->username = $data['username'] ?? $user->username;
-                $user->email = $data['email'];
-                $user->phone = $data['phone'];
-                if (!empty($data['password'])) {
+                if ($canEdit) {
+                    $user->name = $data['name'];
+                    $user->username = $data['username'] ?? $user->username;
+                    $user->email = $data['email'];
+                    $user->phone = $data['phone'];
+                    if (!empty($data['password'])) {
+                        $user->password = Hash::make($data['password']);
+                    }
+                    $user->save();
+                    // مزامنة الأدوار المختارة
+                    $roleNames = Role::whereIn('id', $this->selectedRoles ?? [])->pluck('name')->toArray();
+                    $user->syncRoles($roleNames);
+                } elseif ($canChangePassword) {
+                    // تغيير كلمة المرور فقط بدون تعديل باقي الحقول أو الأدوار
                     $user->password = Hash::make($data['password']);
+                    $user->save();
                 }
-                $user->save();
-                // مزامنة الأدوار المختارة
-                $roleNames = Role::whereIn('id', $this->selectedRoles ?? [])->pluck('name')->toArray();
-                $user->syncRoles($roleNames);
 
                 // التقط القيم الجديدة بعد الحفظ والمزامنة
                 $newName = $user->name; // القيمة المحدثة للغة الحالية
@@ -148,7 +183,7 @@ class UserForm extends Component
         // تنظيف أخطاء التحقق السابقة عند فتح إجراء جديد
         $this->resetErrorBag();
         $this->resetValidation();
-        if (!auth()->user()?->can('edit-users')) {
+        if (!auth()->user()?->can('edit-users') && !auth()->user()?->can('change-user-passwords')) {
             $this->dispatch('notify', type: 'danger', message: __('users.unauthorized'));
             return;
         }
@@ -181,6 +216,16 @@ class UserForm extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         $this->dispatch('notify', type: 'info', message: __('users.cancelled'));
+    }
+
+    public function hideForm()
+    {
+        $this->hidden = true;
+    }
+
+    public function showForm()
+    {
+        $this->hidden = false;
     }
 
     public function render()

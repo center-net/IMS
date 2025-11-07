@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title' => 'Roles',
-    'search' => 'Search roles...',
+    'title' => 'Employee Tasks',
+    'search' => 'Search employee tasks...',
     'name' => 'Code',
     'display_name' => 'Display Name',
     'permissions' => 'Permissions',
@@ -20,8 +20,8 @@ return [
     'scroll_bottom' => 'Bottom',
     'groups' => [
         'companies' => 'Company Settings',
-        'users' => 'Users Permissions',
-        'roles' => 'Roles Permissions',
+        'users' => 'Employees Permissions',
+        'roles' => 'Employee Tasks Management',
         'permissions' => 'Permissions Management',
         'logs' => 'System Logs',
         'countries' => 'Countries Permissions',
@@ -35,8 +35,8 @@ return [
         'other' => 'Other',
     ],
 
-    'create_title' => 'Create Role',
-    'edit_title' => 'Edit Role',
+    'create_title' => 'Create Employee Task',
+    'edit_title' => 'Edit Employee Task',
     'save' => 'Save',
     'edit' => 'Edit',
     'delete' => 'Delete',
@@ -44,13 +44,13 @@ return [
     'no_results' => 'No results',
 
     'delete_confirm_title' => 'Confirm Deletion',
-    'delete_confirm_text' => 'Are you sure you want to delete this role?',
+    'delete_confirm_text' => 'Are you sure you want to delete this task?',
 
-    'created' => 'Role created successfully',
-    'updated_success' => 'Role updated successfully',
-    'save_failed' => 'Failed to save role',
-    'deleted' => 'Role deleted successfully',
-    'not_found' => 'Role not found',
+    'created' => 'Task created successfully',
+    'updated_success' => 'Task updated successfully',
+    'save_failed' => 'Failed to save task',
+    'deleted' => 'Task deleted successfully',
+    'not_found' => 'Task not found',
     'unauthorized' => 'You are not authorized to perform this action',
     'cancelled' => 'Operation cancelled',
 ];

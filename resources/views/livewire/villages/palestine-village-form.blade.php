@@ -1,4 +1,5 @@
 <div>
+    @if(auth()->user()?->can('create-villages') || $villageId)
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="card-title mb-3">{{ __('villages.form_title') }}</h5>
@@ -32,12 +33,21 @@
                 </div>
 
                 <div class="d-flex gap-2 mt-3">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-check2"></i> {{ $villageId ? __('villages.update') : __('villages.create') }}
-                    </button>
+                    @if($villageId)
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-check2"></i> {{ __('villages.update') }}
+                        </button>
+                    @else
+                        @can('create-villages')
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-check2"></i> {{ __('villages.create') }}
+                            </button>
+                        @endcan
+                    @endif
                     <button class="btn btn-secondary" type="button" wire:click="cancel"><i class="bi-arrow-counterclockwise"></i> {{ __('villages.cancel') }}</button>
                 </div>
             </form>
         </div>
     </div>
+    @endif
 </div>

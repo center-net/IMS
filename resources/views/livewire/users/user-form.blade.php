@@ -1,4 +1,5 @@
 <div>
+    @if((auth()->user()?->can('create-users') || $userId) && !$hidden)
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="card-title mb-3">{{ $userId ? __('users.edit_user') : __('users.create_user') }}</h5>
@@ -30,7 +31,12 @@
 
                 <div>
                     <label class="form-label">{{ __('users.password') }}</label>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" wire:model.defer="password">
+                    <div class="input-group">
+                        <input type="password" id="userPasswordInput" class="form-control @error('password') is-invalid @enderror" wire:model.defer="password" placeholder="{{ __('users.password') }}">
+                        <button type="button" class="btn btn-outline-secondary" id="togglePasswordBtn" title="{{ __('users.password') }}">
+                            <i class="bi-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
                     @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     @if($userId)
                         <small class="text-muted">{{ __('users.password_keep_hint') }}</small>
@@ -48,12 +54,44 @@
                 </div>
 
                 <div class="d-flex gap-2 mt-2">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="bi-save"></i> {{ $userId ? __('users.update') : __('users.create') }}
-                    </button>
+                    @if($userId)
+                        @can('edit-users')
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi-save"></i> {{ __('users.update') }}
+                            </button>
+                        @endcan
+                    @else
+                        @can('create-users')
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi-save"></i> {{ __('users.create') }}
+                            </button>
+                        @endcan
+                    @endif
                     <button class="btn btn-secondary" type="button" wire:click="cancel"><i class="bi-x-lg"></i> {{ __('users.cancel') }}</button>
                 </div>
             </form>
         </div>
     </div>
+    @endif
 </div>
+
+@push('scripts')
+<script>
+    (function() {
+        function setupToggle() {
+            const input = document.getElementById('userPasswordInput');
+            const btn = document.getElementById('togglePasswordBtn');
+            const icon = document.getElementById('togglePasswordIcon');
+            if (!input || !btn || !icon) return;
+            btn.addEventListener('click', function() {
+                const isHidden = input.getAttribute('type') === 'password';
+                input.setAttribute('type', isHidden ? 'text' : 'password');
+                icon.classList.toggle('bi-eye', !isHidden);
+                icon.classList.toggle('bi-eye-slash', isHidden);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', setupToggle);
+        window.addEventListener('livewire:load', setupToggle);
+    })();
+</script>
+@endpush

@@ -9,9 +9,13 @@
             @livewire('users.user-list')
         </div>
         <div class="col-12 col-lg-4">
-            @livewire('users.user-form')
+            @canany(['create-users','edit-users'])
+                @livewire('users.user-form')
+            @endcanany
+            @can('view-user-profiles')
+                @livewire('users.user-details')
+            @endcan
         </div>
     </div>
 </div>
 @endsection
-

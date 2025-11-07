@@ -45,7 +45,10 @@
                     <label class="form-label">{{ __('auth.password_label') }}</label>
                     <div class="input-group input-group-lg">
                         <span class="input-group-text bg-transparent text-white-50"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" class="form-control form-control-lg" placeholder="{{ __('auth.password_placeholder') }}" required>
+                        <input type="password" id="loginPasswordInput" name="password" class="form-control form-control-lg" placeholder="{{ __('auth.password_placeholder') }}" required>
+                        <button type="button" class="btn btn-outline-light" id="toggleLoginPasswordBtn" title="{{ __('auth.password_label') }}" aria-label="toggle-password-visibility">
+                            <i class="bi-eye" id="toggleLoginPasswordIcon"></i>
+                        </button>
                     </div>
                     @error('password')
                         <div class="text-warning small mt-1">{{ $message }}</div>
@@ -64,6 +67,23 @@
                     {{ __('auth.submit') }}
                 </button>
             </form>
+            <script>
+                (function() {
+                    function initToggle() {
+                        var input = document.getElementById('loginPasswordInput');
+                        var btn = document.getElementById('toggleLoginPasswordBtn');
+                        var icon = document.getElementById('toggleLoginPasswordIcon');
+                        if (!input || !btn || !icon) return;
+                        btn.addEventListener('click', function() {
+                            var isHidden = input.getAttribute('type') === 'password';
+                            input.setAttribute('type', isHidden ? 'text' : 'password');
+                            icon.classList.toggle('bi-eye', !isHidden);
+                            icon.classList.toggle('bi-eye-slash', isHidden);
+                        }, { once: false });
+                    }
+                    document.addEventListener('DOMContentLoaded', initToggle);
+                })();
+            </script>
         </div>
     </div>
     

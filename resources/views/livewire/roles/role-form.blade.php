@@ -1,3 +1,5 @@
+<div>
+@if(auth()->user()?->can('create-roles') || $roleId)
 <div class="card shadow-sm">
     <div class="card-header">
         <h5 class="card-title mb-0">
@@ -14,14 +16,18 @@
                 <span class="input-group-text"><i class="bi bi-card-text"></i></span>
                 <input type="text" class="form-control @error('display_name') is-invalid @enderror" wire:model.defer="display_name" placeholder="{{ __('roles.display_name') }}">
                 @error('display_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
-            </div>
-        </div>
+</div>
+</div>
 
         <div class="mb-3">
             <label class="form-label">{{ __('roles.permissions') }}</label>
-            <button type="button" class="btn btn-outline-secondary btn-sm ms-2" wire:click="openPermissionsModal" title="{{ __('roles.permissions') }}">
-                <i class="bi-list-check"></i>
-            </button>
+@if(($roleId && auth()->user()?->can('edit-roles')) || (!$roleId && auth()->user()?->can('create-roles')))
+@can('manage-role-permissions')
+<button type="button" class="btn btn-outline-secondary btn-sm ms-2" wire:click="openPermissionsModal" title="{{ __('roles.permissions') }}">
+                    <i class="bi-list-check"></i>
+</button>
+@endcan
+@endif
             <span class="badge bg-info ms-2">{{ __('roles.selected_label') }}: {{ count($selectedPermissions) }}</span>
             @php
                 // Group permissions by module inferred from code name suffix (e.g., view-users => users)
@@ -51,17 +57,31 @@
                     $grouped[$module][] = $perm;
                     $allIds[] = $perm->id;
                 }
+                // دمج مجموعات معيّنة ضمن مجموعات رئيسية معروفة
+                $aliasMap = [
+                    'main-treasuries' => 'treasuries',
+                    'user-profiles' => 'users',
+                    'user-passwords' => 'users',
+                    // دمج مجموعة إدارة الصلاحيات ضمن مجموعة مهام الموظفين
+                    'permissions' => 'roles',
+                    // دمج أي صلاحيات قد تكون باسم role-permissions ضمن مجموعة المهام
+                    'role-permissions' => 'roles',
+                ];
+                foreach ($aliasMap as $from => $to) {
+                    if (isset($grouped[$from])) {
+                        $grouped[$to] = array_merge($grouped[$to] ?? [], $grouped[$from]);
+                        unset($grouped[$from]);
+                    }
+                }
                 // Ensure order of known groups
                 $orderedModules = array_keys($groupMap);
                 foreach ($grouped as $module => $items) {
                     if (!in_array($module, $orderedModules)) {
-                        // خرائط إلى مجموعات معروفة عند الحاجة
-                        if ($module === 'main-treasuries') {
-                            $module = 'treasuries';
-                        }
                         $orderedModules[] = $module;
                     }
                 }
+                // بعد دمج مجموعات الصلاحيات داخل roles، لا نعرضها كمجموعات مستقلة
+        $orderedModules = array_values(array_diff($orderedModules, ['permissions', 'role-permissions', 'countries']));
             @endphp
 
             @if($showPermissionsModal)
@@ -162,31 +182,28 @@
                             </div>
                         </div>
                     </div>
-                    <!-- شريط درجة الدور العمودي مع أزرار الصعود/الهبوط -->
-                    <div class="position-fixed" style="top: 50%; right: 12px; transform: translateY(-50%); z-index:1060;">
-                        <div class="d-flex flex-column align-items-center gap-2">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" id="permissionsScrollTop" title="{{ __('roles.scroll_top') }}">
-                                <i class="bi-chevron-up"></i>
-                            </button>
-                            <span class="badge bg-primary" style="writing-mode: vertical-rl; text-orientation: mixed;">
-                                {{ __('roles.selected_label') }}: {{ $selectedCount }} / {{ $totalPermissions }}
-                            </span>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" id="permissionsScrollBottom" title="{{ __('roles.scroll_bottom') }}">
-                                <i class="bi-chevron-down"></i>
-                            </button>
-                        </div>
-                    </div>
+                    
                 </div>
             @endif
             @error('selectedPermissions')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
         </div>
 
         <div class="d-flex gap-2">
-            <button class="btn btn-primary" wire:click="save"><i class="bi-check"></i> {{ __('roles.save') }}</button>
+            @if($roleId)
+                @can('edit-roles')
+                    <button class="btn btn-primary" wire:click="save"><i class="bi-check"></i> {{ __('roles.save') }}</button>
+                @endcan
+            @else
+                @can('create-roles')
+                    <button class="btn btn-primary" wire:click="save"><i class="bi-check"></i> {{ __('roles.save') }}</button>
+                @endcan
+            @endif
             <button class="btn btn-secondary" wire:click="cancel"><i class="bi-arrow-counterclockwise"></i> {{ __('roles.cancel') }}</button>
         </div>
     </div>
 </div>
+
+@endif
 
 @push('scripts')
 <script>
@@ -214,3 +231,4 @@
     })();
 </script>
 @endpush
+</div>
