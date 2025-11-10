@@ -61,13 +61,13 @@
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
                                     @can('edit-treasuries')
-                                    <button class="btn btn-outline-warning" wire:click="edit({{ $tr->id }})">
-                                        <i class="bi bi-pencil-square"></i> {{ __('treasuries.edit') }}
+                                    <button class="btn btn-outline-warning" wire:click="edit({{ $tr->id }})" data-bs-toggle="tooltip" title="{{ __('treasuries.edit') }}">
+                                        <i class="bi bi-pencil-square"></i>
                                     </button>
                                     @endcan
                                     @can('delete-treasuries')
-                                    <button class="btn btn-outline-danger" onclick="return confirm('{{ __('treasuries.delete_confirm') }}')" wire:click="delete({{ $tr->id }})">
-                                        <i class="bi bi-trash"></i> {{ __('treasuries.delete') }}
+                                    <button class="btn btn-outline-danger" onclick="return confirm('{{ __('treasuries.delete_confirm') }}')" wire:click="delete({{ $tr->id }})" data-bs-toggle="tooltip" title="{{ __('treasuries.delete') }}">
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                     @endcan
                                 </div>

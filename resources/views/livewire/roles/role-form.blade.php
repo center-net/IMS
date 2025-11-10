@@ -69,6 +69,8 @@
                     'logs' => 'companies',
                     // نقل صلاحية قائمة الإعدادات العامة إلى مهام عامة
                     'general-settings' => 'companies',
+                    // نقل صلاحية قائمة ضبط المخازن إلى مهام عامة
+                    'inventory-settings' => 'companies',
                 ];
                 foreach ($aliasMap as $from => $to) {
                     if (isset($grouped[$from])) {
@@ -84,7 +86,7 @@
                     }
                 }
                 // بعد دمج مجموعات الصلاحيات داخل roles، لا نعرضها كمجموعات مستقلة
-        $orderedModules = array_values(array_diff($orderedModules, ['permissions', 'role-permissions', 'countries', 'logs']));
+                $orderedModules = array_values(array_diff($orderedModules, ['permissions', 'role-permissions', 'countries', 'logs', 'inventory-settings']));
             @endphp
 
             @if($showPermissionsModal)

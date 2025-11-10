@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'Approved Currencies',
+    'code' => 'Code',
+    'name' => 'Currency Name',
+    'symbol' => 'Symbol',
+    'rate_to_usd' => 'Rate to USD',
+    'updated' => 'Updated',
+    'actions' => 'Actions',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'empty' => 'No currencies found.',
+    'search' => 'Search currencies...',
+    'create' => 'Create',
+    'update' => 'Update',
+    'cancel' => 'Cancel',
+    'form_add_title' => 'Add Currency',
+    'form_edit_title' => 'Edit Currency',
+    'deleted_success' => 'Currency deleted',
+    'created_success' => 'Currency created',
+    'updated_success' => 'Currency updated',
+    'delete_confirm' => 'Confirm delete currency?',
+    'rate_update_failed' => 'Failed to update rate from service',
+    'unauthorized' => 'You are not authorized to perform this action',
+    'live_rate_unavailable' => 'Live rates are currently unavailable.',
+    'source' => 'Source',
+];

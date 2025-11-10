@@ -52,10 +52,14 @@
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
                                     @can('edit-villages')
-                                    <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $village->id }})"><i class="bi-pencil"></i> {{ __('villages.edit') }}</button>
+            <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $village->id }})" data-bs-toggle="tooltip" title="{{ __('villages.edit') }}">
+                <i class="bi bi-pencil-square"></i>
+            </button>
                                     @endcan
                                     @can('delete-villages')
-                                    <button class="btn btn-sm btn-outline-danger" wire:click="confirmDelete({{ $village->id }})"><i class="bi bi-trash"></i> {{ __('villages.delete') }}</button>
+                                    <button class="btn btn-sm btn-outline-danger" wire:click="confirmDelete({{ $village->id }})" data-bs-toggle="tooltip" title="{{ __('villages.delete') }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                     @endcan
                                 </div>
                             </td>

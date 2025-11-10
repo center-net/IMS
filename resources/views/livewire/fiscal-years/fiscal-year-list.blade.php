@@ -51,9 +51,9 @@
                                 @endcan
                             </td>
                             <td class="text-end text-nowrap">
-                                <button class="btn btn-sm btn-outline-secondary" wire:click="details({{ $fy->id }})">
-                                    <i class="bi bi-eye"></i> {{ __('fiscal_years.details') }}
-                                </button>
+                <button class="btn btn-sm btn-outline-secondary" wire:click="details({{ $fy->id }})" data-bs-toggle="tooltip" title="{{ __('fiscal_years.details') }}">
+                    <i class="bi bi-card-text"></i>
+                </button>
                             </td>
                             
                         </tr>

@@ -38,29 +38,7 @@ Route::group(
         Route::get('/employees/{user}', function (\App\Models\User $user) {
             return view('users.show', compact('user'));
         })->name('users.show')
-          ->middleware(['auth', 'can:view-user-profiles']);
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذه المسارات داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذه المسارات داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
-
-        // مجموعة مسارات الإعدادات العامة: تتطلب امتلاك صلاحية مشاهدة قائمة الإعدادات العامة
+            ->middleware(['auth', 'can:view-user-profiles']);
         Route::group(['middleware' => ['auth', 'can:view-general-settings']], function () {
             // Roles & Permissions management (still requires its own permission)
             Route::view('/employee-tasks', 'roles.index')
@@ -122,6 +100,21 @@ Route::group(
                 ->name('offers.index')
                 ->middleware(['can:view-offers']);
 
+            // Suppliers management (Inventory Settings)
+            Route::view('/settings/inventory/suppliers', 'suppliers.index')
+                ->name('suppliers.index')
+                ->middleware(['can:view-suppliers']);
+
+            // Representatives management (Inventory Settings)
+            Route::view('/settings/inventory/representatives', 'representatives.index')
+                ->name('representatives.index')
+                ->middleware(['can:view-representatives']);
+
+            // Currencies management (Inventory Settings)
+            Route::view('/settings/inventory/currencies', 'currencies.index')
+                ->name('currencies.index')
+                ->middleware(['can:view-currencies']);
+
             // System Logs
             Route::view('/logs', 'logs.index')
                 ->name('logs.index')
@@ -130,5 +123,5 @@ Route::group(
 
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
     }
-    
+
 );

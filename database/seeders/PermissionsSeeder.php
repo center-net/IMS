@@ -416,6 +416,114 @@ class PermissionsSeeder extends Seeder
             ],
         ];
 
+        // صلاحيات الموردين
+        $supplierPermissions = [
+            [
+                'name' => 'view-suppliers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة الموردين',
+                    'en' => 'View Suppliers'
+                ]
+            ],
+            [
+                'name' => 'create-suppliers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة مورد',
+                    'en' => 'Create Supplier'
+                ]
+            ],
+            [
+                'name' => 'edit-suppliers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل مورد',
+                    'en' => 'Edit Supplier'
+                ]
+            ],
+            [
+                'name' => 'delete-suppliers',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف مورد',
+                    'en' => 'Delete Supplier'
+                ]
+            ],
+        ];
+
+        // صلاحيات المندوبين
+        $representativePermissions = [
+            [
+                'name' => 'view-representatives',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة المندوبين',
+                    'en' => 'View Representatives'
+                ]
+            ],
+            [
+                'name' => 'create-representatives',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة مندوب',
+                    'en' => 'Create Representative'
+                ]
+            ],
+            [
+                'name' => 'edit-representatives',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل مندوب',
+                    'en' => 'Edit Representative'
+                ]
+            ],
+            [
+                'name' => 'delete-representatives',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف مندوب',
+                    'en' => 'Delete Representative'
+                ]
+            ],
+        ];
+
+        // صلاحيات العملات
+        $currencyPermissions = [
+            [
+                'name' => 'view-currencies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة العملات',
+                    'en' => 'View Currencies'
+                ]
+            ],
+            [
+                'name' => 'create-currencies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة عملة',
+                    'en' => 'Create Currency'
+                ]
+            ],
+            [
+                'name' => 'edit-currencies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل عملة',
+                    'en' => 'Edit Currency'
+                ]
+            ],
+            [
+                'name' => 'delete-currencies',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف عملة',
+                    'en' => 'Delete Currency'
+                ]
+            ],
+        ];
+
         // صلاحية إظهار قائمة الإعدادات العامة
         $generalSettingsPermissions = [
             [
@@ -442,6 +550,9 @@ class PermissionsSeeder extends Seeder
             $fiscalMonthPermissions,
             $treasuryPermissions,
             $offerPermissions,
+            $supplierPermissions,
+            $representativePermissions,
+            $currencyPermissions,
             $generalSettingsPermissions
         );
 

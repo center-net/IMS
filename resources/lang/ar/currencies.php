@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'العملات المعتمدة',
+    'code' => 'الكود',
+    'name' => 'اسم العملة',
+    'symbol' => 'رمز العملة',
+    'rate_to_usd' => 'سعر العملة مقابل الدولار',
+    'updated' => 'آخر تحديث',
+    'actions' => 'الإجراءات',
+    'edit' => 'تعديل',
+    'delete' => 'حذف',
+    'empty' => 'لا توجد عملات.',
+    'search' => 'ابحث في العملات...',
+    'create' => 'إنشاء',
+    'update' => 'تحديث',
+    'cancel' => 'إلغاء',
+    'form_add_title' => 'إضافة عملة',
+    'form_edit_title' => 'تعديل عملة',
+    'deleted_success' => 'تم حذف العملة',
+    'created_success' => 'تم إنشاء العملة',
+    'updated_success' => 'تم تحديث العملة',
+    'delete_confirm' => 'تأكيد حذف العملة؟',
+    'rate_update_failed' => 'فشل تحديث السعر من الخدمة',
+    'unauthorized' => 'غير مسموح لك بتنفيذ هذا الإجراء',
+    'live_rate_unavailable' => 'تعذر جلب الأسعار الحية حالياً.',
+    'source' => 'المصدر',
+];

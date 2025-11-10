@@ -31,12 +31,16 @@
                             <td>{{ $role->permissions()->count() }}</td>
                             <td>{{ number_format($role->users_count ?? 0) }}</td>
                             <td class="text-end">
-                                @can('edit-roles')
-                                    <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $role->id }})"><i class="bi-pencil"></i> {{ __('roles.edit') }}</button>
-                                @endcan
-                                @can('delete-roles')
-                                    <button class="btn btn-sm btn-outline-danger" wire:click="confirmDelete({{ $role->id }})"><i class="bi-trash"></i> {{ __('roles.delete') }}</button>
-                                @endcan
+                                    @can('edit-roles')
+            <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $role->id }})" data-bs-toggle="tooltip" title="{{ __('roles.edit') }}">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+                                    @endcan
+                                    @can('delete-roles')
+                                    <button class="btn btn-sm btn-outline-danger" wire:click="confirmDelete({{ $role->id }})" data-bs-toggle="tooltip" title="{{ __('roles.delete') }}">
+                                        <i class="bi-trash"></i>
+                                    </button>
+                                    @endcan
                             </td>
                         </tr>
                         @empty

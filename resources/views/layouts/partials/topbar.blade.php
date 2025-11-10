@@ -18,6 +18,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">{{ __('dashboard.title') }}</a></li>
                     @include('layouts.partials.topbar.general-settings-dropdown')
+                    @include('layouts.partials.topbar.inventory-settings-dropdown')
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     @include('layouts.partials.topbar.user-menu')

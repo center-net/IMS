@@ -55,5 +55,20 @@ class DatabaseSeeder extends Seeder
 
         // إدراج عروض تجريبية (متعدد اللغات)
         $this->call(OffersSeeder::class);
+
+        // إدراج العملات المعتمدة (متعدد اللغات)
+        $this->call(CurrenciesSeeder::class);
+
+        // إدراج موردين تجريبيين (متعدد اللغات)
+        $this->call(SuppliersSeeder::class);
+
+        // إنشاء بطاقات الموردين وربطها بالموردين
+        $this->call(SupplierCardsSeeder::class);
+
+        // إدراج مندوبين تجريبيين (متعدد اللغات)
+        $this->call(RepresentativesSeeder::class);
+
+        // إنشاء بطاقات المندوبين وربطها بالمندوبين
+        $this->call(RepresentativeCardsSeeder::class);
     }
 }

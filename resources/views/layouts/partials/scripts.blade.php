@@ -29,5 +29,23 @@
             t.show();
         });
     </script>
+    <script>
+        // Initialize Bootstrap tooltips globally and after Livewire updates
+        function initTooltips() {
+            var list = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            list.forEach(function (el) {
+                try { new bootstrap.Tooltip(el); } catch (e) {}
+            });
+        }
+        document.addEventListener('DOMContentLoaded', initTooltips);
+        window.addEventListener('livewire:load', function () {
+            initTooltips();
+            try {
+                if (window.Livewire && typeof Livewire.hook === 'function') {
+                    Livewire.hook('message.processed', function () { initTooltips(); });
+                }
+            } catch (e) {}
+        });
+    </script>
     {{-- Output stacked scripts from child views --}}
     @stack('scripts')

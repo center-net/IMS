@@ -56,10 +56,10 @@
                                     @endif
                                 @endcan
                             </td>
-                            <td class="text-nowrap">
-                                <button class="btn btn-sm btn-outline-primary" wire:click="$dispatch('showFiscalMonthDetails', { id: {{ $m->id }} })">
-                                    {{ __('fiscal_months.details') }}
-                                </button>
+                            <td class="text-nowrap text-end">
+                <button class="btn btn-sm btn-outline-primary" wire:click="$dispatch('showFiscalMonthDetails', { id: {{ $m->id }} })" data-bs-toggle="tooltip" title="{{ __('fiscal_months.details') }}">
+                    <i class="bi bi-card-text"></i>
+                </button>
                             </td>
                         </tr>
                     @empty

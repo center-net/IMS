@@ -37,9 +37,13 @@
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
                                     @can('edit-offers')
-                                    <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $offer->id }})"><i class="bi-pencil"></i> {{ __('offers.edit') }}</button>
+            <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $offer->id }})" data-bs-toggle="tooltip" title="{{ __('offers.edit') }}">
+                <i class="bi bi-pencil-square"></i>
+            </button>
                                     @endcan
-                                    <button class="btn btn-sm btn-outline-danger" wire:click="delete({{ $offer->id }})"><i class="bi-trash"></i> {{ __('offers.delete') }}</button>
+                                    <button class="btn btn-sm btn-outline-danger" wire:click="delete({{ $offer->id }})" data-bs-toggle="tooltip" title="{{ __('offers.delete') }}">
+                                        <i class="bi-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
