@@ -8,10 +8,11 @@
         <div class="col-12 col-lg-8">
             @livewire('offers.offer-list')
         </div>
+        @canany(['create-offers','edit-offers'])
         <div class="col-12 col-lg-4">
             @livewire('offers.offer-form')
         </div>
+        @endcanany
     </div>
 </div>
 @endsection
-

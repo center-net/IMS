@@ -1,3 +1,4 @@
+@can('view-general-settings')
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="generalSettingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         {{ __('menu.general_settings') }}
@@ -39,6 +40,9 @@
         @can('view-discounts')
             <li><a class="dropdown-item" href="#"><i class="bi-dash-circle me-1"></i> {{ __('menu.discounts') }}</a></li>
         @endcan
+        @can('view-logs')
+            <li><a class="dropdown-item" href="{{ route('logs.index') }}"><i class="bi-clipboard-data me-1"></i> {{ __('menu.logs') }}</a></li>
+        @endcan
         @can('view-cities')
             <li><a class="dropdown-item" href="{{ route('cities.palestine') }}"><i class="bi-geo-alt me-1"></i> {{ __('menu.cities') }}</a></li>
         @endcan
@@ -47,3 +51,4 @@
         @endcan
     </ul>
 </li>
+@endcan

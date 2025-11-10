@@ -19,7 +19,7 @@ return [
     'scroll_top' => 'إلى الأعلى',
     'scroll_bottom' => 'إلى الأسفل',
     'groups' => [
-        'companies' => 'إعدادات الشركة',
+        'companies' => 'مهام عامة',
         'users' => 'ادارة الموظفين',
         'roles' => 'إدارة مهام الموظفين',
         'permissions' => 'إدارة الصلاحيات',

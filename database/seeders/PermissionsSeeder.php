@@ -416,6 +416,18 @@ class PermissionsSeeder extends Seeder
             ],
         ];
 
+        // صلاحية إظهار قائمة الإعدادات العامة
+        $generalSettingsPermissions = [
+            [
+                'name' => 'view-general-settings',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة قائمة الإعدادات العامة',
+                    'en' => 'View General Settings Menu'
+                ]
+            ],
+        ];
+
         // دمج جميع الصلاحيات
         $allPermissions = array_merge(
             $userPermissions,
@@ -429,7 +441,8 @@ class PermissionsSeeder extends Seeder
             $fiscalYearPermissions,
             $fiscalMonthPermissions,
             $treasuryPermissions,
-            $offerPermissions
+            $offerPermissions,
+            $generalSettingsPermissions
         );
 
         // إنشاء الصلاحيات

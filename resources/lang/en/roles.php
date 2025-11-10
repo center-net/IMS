@@ -19,7 +19,7 @@ return [
     'scroll_top' => 'Top',
     'scroll_bottom' => 'Bottom',
     'groups' => [
-        'companies' => 'Company Settings',
+        'companies' => 'General Tasks',
         'users' => 'Employees Permissions',
         'roles' => 'Employee Tasks Management',
         'permissions' => 'Permissions Management',

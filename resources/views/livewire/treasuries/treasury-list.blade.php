@@ -43,6 +43,7 @@
                                 @endif
                             </td>
                             <td>
+                                @can('edit-treasuries')
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="statusSwitch{{ $tr->id }}"
                                            @checked($tr->status === 'open')
@@ -51,15 +52,24 @@
                                         {{ $tr->status === 'open' ? __('treasuries.open') : __('treasuries.closed') }}
                                     </label>
                                 </div>
+                                @else
+                                    <span class="badge bg-{{ $tr->status === 'open' ? 'success' : 'secondary' }}">
+                                        {{ $tr->status === 'open' ? __('treasuries.open') : __('treasuries.closed') }}
+                                    </span>
+                                @endcan
                             </td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
+                                    @can('edit-treasuries')
                                     <button class="btn btn-outline-warning" wire:click="edit({{ $tr->id }})">
                                         <i class="bi bi-pencil-square"></i> {{ __('treasuries.edit') }}
                                     </button>
+                                    @endcan
+                                    @can('delete-treasuries')
                                     <button class="btn btn-outline-danger" onclick="return confirm('{{ __('treasuries.delete_confirm') }}')" wire:click="delete({{ $tr->id }})">
                                         <i class="bi bi-trash"></i> {{ __('treasuries.delete') }}
                                     </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

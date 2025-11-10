@@ -1,4 +1,5 @@
 <div>
+    @if(auth()->user()?->can('create-treasuries') || $editing)
     <div class="card">
         <div class="card-header">
             <h5 class="mb-1">
@@ -104,4 +105,5 @@
             </form>
         </div>
     </div>
+    @endif
 </div>

@@ -7,9 +7,10 @@
         <div class="col-lg-7">
             @livewire('treasuries.treasury-list')
         </div>
+        @canany(['create-treasuries','edit-treasuries'])
         <div class="col-lg-5">
             @livewire('treasuries.treasury-form')
         </div>
+        @endcanany
     </div>
 @endsection
-

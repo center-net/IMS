@@ -32,9 +32,7 @@ Route::group(
         })->name('dashboard')->middleware('auth');
 
         // Users management (protected by permissions)
-        Route::view('/employees', 'users.index')
-            ->name('users.index')
-            ->middleware(['auth', 'can:view-users']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
         // Employee profile view (protected by view-user-profiles)
         Route::get('/employees/{user}', function (\App\Models\User $user) {
@@ -42,67 +40,95 @@ Route::group(
         })->name('users.show')
           ->middleware(['auth', 'can:view-user-profiles']);
 
-        // Roles & Permissions management (protected by permissions)
-        Route::view('/employee-tasks', 'roles.index')
-            ->name('roles.index')
-            ->middleware(['auth', 'can:view-roles']);
-        // Permissions page removed entirely (managed via seeders/commands only)
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Countries management (protected by permissions)
-        Route::view('/countries', 'countries.index')
-            ->name('countries.index')
-            ->middleware(['auth', 'can:view-countries']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Cities management (protected by permissions)
-        Route::view('/cities', 'cities.index')
-            ->name('cities.index')
-            ->middleware(['auth', 'can:view-cities']);
+        // ملاحظة: سيتم تضمين هذه المسارات داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Palestine-only cities page (protected by permissions)
-        Route::view('/cities/palestine', 'cities.palestine')
-            ->name('cities.palestine')
-            ->middleware(['auth', 'can:view-cities']);
+        // ملاحظة: سيتم تضمين هذه المسارات داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Villages management (protected by permissions)
-        Route::view('/villages', 'villages.index')
-            ->name('villages.index')
-            ->middleware(['auth', 'can:view-villages']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Palestine-only villages page (protected by permissions)
-        Route::view('/villages/palestine', 'villages.palestine')
-            ->name('villages.palestine')
-            ->middleware(['auth', 'can:view-villages']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Company settings (protected by permissions)
-        Route::view('/settings/company', 'companies.index')
-            ->name('companies.index')
-            ->middleware(['auth', 'can:view-companies']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Fiscal Years settings (protected by permissions)
-        Route::view('/settings/fiscal-years', 'fiscal-years.index')
-            ->name('fiscal-years.index')
-            ->middleware(['auth', 'can:view-fiscal-years']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Fiscal Months settings (protected by permissions; reuse view-fiscal-years for now)
-        Route::view('/settings/fiscal-months', 'fiscal-months.index')
-            ->name('fiscal-months.index')
-            ->middleware(['auth', 'can:view-fiscal-years']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Treasuries (Vaults) management (protected by permissions)
-        Route::view('/settings/treasuries', 'treasuries.index')
-            ->name('treasuries.index')
-            ->middleware(['auth', 'can:view-treasuries']);
+        // ملاحظة: سيتم تضمين هذا المسار داخل مجموعة الإعدادات العامة لإضافة حماية إضافية
 
-        // Offers management (protected by permissions)
-        Route::view('/settings/offers', 'offers.index')
-            ->name('offers.index')
-            ->middleware(['auth', 'can:view-offers']);
+        // مجموعة مسارات الإعدادات العامة: تتطلب امتلاك صلاحية مشاهدة قائمة الإعدادات العامة
+        Route::group(['middleware' => ['auth', 'can:view-general-settings']], function () {
+            // Roles & Permissions management (still requires its own permission)
+            Route::view('/employee-tasks', 'roles.index')
+                ->name('roles.index')
+                ->middleware(['can:view-roles']);
 
-        // System Logs (protected by permissions)
-        Route::view('/logs', 'logs.index')
-            ->name('logs.index')
-            ->middleware(['auth', 'can:view-logs']);
+            // Users management
+            Route::view('/employees', 'users.index')
+                ->name('users.index')
+                ->middleware(['can:view-users']);
+
+            // Countries management
+            Route::view('/countries', 'countries.index')
+                ->name('countries.index')
+                ->middleware(['can:view-countries']);
+
+            // Cities management
+            Route::view('/cities', 'cities.index')
+                ->name('cities.index')
+                ->middleware(['can:view-cities']);
+
+            // Palestine-only cities page
+            Route::view('/cities/palestine', 'cities.palestine')
+                ->name('cities.palestine')
+                ->middleware(['can:view-cities']);
+
+            // Villages management
+            Route::view('/villages', 'villages.index')
+                ->name('villages.index')
+                ->middleware(['can:view-villages']);
+
+            // Palestine-only villages page
+            Route::view('/villages/palestine', 'villages.palestine')
+                ->name('villages.palestine')
+                ->middleware(['can:view-villages']);
+
+            // Company settings
+            Route::view('/settings/company', 'companies.index')
+                ->name('companies.index')
+                ->middleware(['can:view-companies']);
+
+            // Fiscal Years settings
+            Route::view('/settings/fiscal-years', 'fiscal-years.index')
+                ->name('fiscal-years.index')
+                ->middleware(['can:view-fiscal-years']);
+
+            // Fiscal Months settings
+            Route::view('/settings/fiscal-months', 'fiscal-months.index')
+                ->name('fiscal-months.index')
+                ->middleware(['can:view-fiscal-years']);
+
+            // Treasuries (Vaults) management
+            Route::view('/settings/treasuries', 'treasuries.index')
+                ->name('treasuries.index')
+                ->middleware(['can:view-treasuries']);
+
+            // Offers management
+            Route::view('/settings/offers', 'offers.index')
+                ->name('offers.index')
+                ->middleware(['can:view-offers']);
+
+            // System Logs
+            Route::view('/logs', 'logs.index')
+                ->name('logs.index')
+                ->middleware(['can:view-logs']);
+        });
 
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
     }
+    
 );

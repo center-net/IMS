@@ -36,7 +36,9 @@
                             <td class="text-nowrap">{{ optional($offer->updated_at)->diffForHumans() }}</td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
+                                    @can('edit-offers')
                                     <button class="btn btn-sm btn-outline-primary" wire:click="edit({{ $offer->id }})"><i class="bi-pencil"></i> {{ __('offers.edit') }}</button>
+                                    @endcan
                                     <button class="btn btn-sm btn-outline-danger" wire:click="delete({{ $offer->id }})"><i class="bi-trash"></i> {{ __('offers.delete') }}</button>
                                 </div>
                             </td>
@@ -52,4 +54,3 @@
         </div>
     </div>
 </div>
-

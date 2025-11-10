@@ -37,7 +37,6 @@
                     'users' => __('roles.groups.users'),
                     'roles' => __('roles.groups.roles'),
                     'permissions' => __('roles.groups.permissions'),
-                    'logs' => __('roles.groups.logs'),
                     'countries' => __('roles.groups.countries'),
                     'cities' => __('roles.groups.cities'),
                     'villages' => __('roles.groups.villages'),
@@ -66,6 +65,10 @@
                     'permissions' => 'roles',
                     // دمج أي صلاحيات قد تكون باسم role-permissions ضمن مجموعة المهام
                     'role-permissions' => 'roles',
+                    // نقل صلاحيات سجلات النظام إلى مهام عامة
+                    'logs' => 'companies',
+                    // نقل صلاحية قائمة الإعدادات العامة إلى مهام عامة
+                    'general-settings' => 'companies',
                 ];
                 foreach ($aliasMap as $from => $to) {
                     if (isset($grouped[$from])) {
@@ -81,7 +84,7 @@
                     }
                 }
                 // بعد دمج مجموعات الصلاحيات داخل roles، لا نعرضها كمجموعات مستقلة
-        $orderedModules = array_values(array_diff($orderedModules, ['permissions', 'role-permissions', 'countries']));
+        $orderedModules = array_values(array_diff($orderedModules, ['permissions', 'role-permissions', 'countries', 'logs']));
             @endphp
 
             @if($showPermissionsModal)
