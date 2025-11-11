@@ -524,6 +524,42 @@ class PermissionsSeeder extends Seeder
             ],
         ];
 
+        // صلاحيات الأصناف (شجرة الأصناف)
+        $categoryPermissions = [
+            [
+                'name' => 'view-categories',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'مشاهدة الأصناف',
+                    'en' => 'View Categories'
+                ]
+            ],
+            [
+                'name' => 'create-categories',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'إضافة صنف',
+                    'en' => 'Create Category'
+                ]
+            ],
+            [
+                'name' => 'edit-categories',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'تعديل صنف',
+                    'en' => 'Edit Category'
+                ]
+            ],
+            [
+                'name' => 'delete-categories',
+                'guard_name' => 'web',
+                'display_name' => [
+                    'ar' => 'حذف صنف',
+                    'en' => 'Delete Category'
+                ]
+            ],
+        ];
+
         // صلاحية إظهار قائمة الإعدادات العامة
         $generalSettingsPermissions = [
             [
@@ -553,6 +589,7 @@ class PermissionsSeeder extends Seeder
             $supplierPermissions,
             $representativePermissions,
             $currencyPermissions,
+            $categoryPermissions,
             $generalSettingsPermissions
         );
 

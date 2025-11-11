@@ -3,7 +3,7 @@
     @php($canEdit = isset($canEdit) ? (bool)$canEdit : (auth()->user()?->can('edit-suppliers') ?? false))
     <form wire:submit.prevent="save">
         @unless($canEdit)
-            <div class="alert alert-warning mb-2">{{ __('suppliers.unauthorized') ?? 'لا تملك صلاحية التعديل. سيتم عرض البيانات فقط.' }}</div>
+            <div class="alert alert-warning mb-2">{{ __('suppliers.unauthorized') }}</div>
         @endunless
         <ul class="nav nav-tabs mb-3" role="tablist">
             <li class="nav-item" role="presentation">
@@ -171,16 +171,16 @@
                         @error('notes')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="col-12">
-                        <div class="text-muted small">المرفقات: {{ $attachmentsCount ?? 0 }}</div>
+                        <div class="text-muted small">{{ __('global.attachments') }}: {{ $attachmentsCount ?? 0 }}</div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="text-muted small">تاريخ الإضافة: {{ $created_at ?? '—' }}</div>
+                        <div class="text-muted small">{{ __('global.created_at') }}: {{ $created_at ?? '—' }}</div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="text-muted small">تاريخ التعديل: {{ $updated_at ?? '—' }}</div>
+                        <div class="text-muted small">{{ __('global.updated_at') }}: {{ $updated_at ?? '—' }}</div>
                     </div>
                     <div class="col-12">
-                        <div class="text-muted small">أنشأها: {{ $created_by_name ?? '—' }}</div>
+                        <div class="text-muted small">{{ __('global.created_by') }}: {{ $created_by_name ?? '—' }}</div>
                     </div>
                 </div>
             </div>

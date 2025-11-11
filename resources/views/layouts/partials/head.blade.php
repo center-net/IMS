@@ -21,6 +21,8 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
         <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
     @endif
+    {{-- Category styles without Vite build --}}
+    <link href="{{ asset('css/categories.css') }}" rel="stylesheet">
     <style>
         .gradient-bg{ background: linear-gradient(135deg, #0d6efd 0%, #6610f2 50%, #6f42c1 100%); }
     </style>

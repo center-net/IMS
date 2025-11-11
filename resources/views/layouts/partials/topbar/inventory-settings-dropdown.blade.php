@@ -6,6 +6,7 @@
         <li><a class="dropdown-item" href="{{ route('suppliers.index') }}"><i class="bi-truck me-1"></i> {{ __('menu.suppliers') }}</a></li>
         <li><a class="dropdown-item" href="{{ route('currencies.index') }}"><i class="bi-cash-coin me-1"></i> {{ __('menu.currencies') }}</a></li>
         <li><a class="dropdown-item" href="{{ route('representatives.index') }}"><i class="bi-person-badge me-1"></i> {{ __('menu.delegates') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('categories.index') }}"><i class="bi-diagram-3 me-1"></i> {{ __('menu.categories') }}</a></li>
         <li><a class="dropdown-item" href="#"><i class="bi-people me-1"></i> {{ __('menu.customers') }}</a></li>
         <li><a class="dropdown-item" href="#"><i class="bi-building me-1"></i> {{ __('menu.warehouses') }}</a></li>
         <li><a class="dropdown-item" href="#"><i class="bi-rulers me-1"></i> {{ __('menu.units') }}</a></li>

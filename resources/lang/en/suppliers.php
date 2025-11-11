@@ -13,4 +13,6 @@ return [
     'delete_confirm' => 'Confirm delete supplier?',
     'cancel' => 'Cancel',
     'select_supplier' => 'Select a supplier to view details',
+    'update' => 'Update',
+    'unauthorized' => 'You are not authorized to edit. Data will be shown only.',
 ];

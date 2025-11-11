@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">{{ __('representatives.name') }} ({{ $locale }})</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('representatives.name') }} بطاقة" wire:model.defer="name">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('representatives.card_name') }}" wire:model.defer="name">
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>

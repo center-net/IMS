@@ -123,13 +123,13 @@
                                 <div class="text-muted small">{{ __('supplier_cards.attachments') }}: {{ $attachmentsCount }}</div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <div class="text-muted small">تاريخ الإضافة: {{ optional($card->created_at)->format('Y-m-d H:i') }}</div>
+                                <div class="text-muted small">{{ __('global.created_at') }}: {{ optional($card->created_at)->format('Y-m-d H:i') }}</div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <div class="text-muted small">تاريخ التعديل: {{ optional($card->updated_at)->format('Y-m-d H:i') }}</div>
+                                <div class="text-muted small">{{ __('global.updated_at') }}: {{ optional($card->updated_at)->format('Y-m-d H:i') }}</div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <div class="text-muted small">أنشأها: {{ optional($card->creator)->name ?? '—' }}</div>
+                                <div class="text-muted small">{{ __('global.created_by') }}: {{ optional($card->creator)->name ?? '—' }}</div>
                             </div>
                         </div>
                     </div>

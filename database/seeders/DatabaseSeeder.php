@@ -13,6 +13,7 @@ use Database\Seeders\CitiesSeeder;
 use Database\Seeders\VillagesSeeder;
 use Database\Seeders\CompaniesSeeder;
 use Database\Seeders\OffersSeeder;
+use Database\Seeders\CategoriesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -58,6 +59,9 @@ class DatabaseSeeder extends Seeder
 
         // إدراج العملات المعتمدة (متعدد اللغات)
         $this->call(CurrenciesSeeder::class);
+
+        // إدراج أصناف المنتجات (شجرة متعددة المستويات)
+        $this->call(CategoriesSeeder::class);
 
         // إدراج موردين تجريبيين (متعدد اللغات)
         $this->call(SuppliersSeeder::class);

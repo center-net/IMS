@@ -33,6 +33,7 @@ return [
     'save_failed' => 'Save failed',
     'unauthorized' => 'You are not authorized for this action',
     'select_representative' => 'Select representative',
+    'card_name' => 'Card Name',
     'tabs_basic' => 'Basic',
     'tabs_contact' => 'Contact',
     'tabs_finance' => 'Finance',

@@ -92,7 +92,7 @@
                                 <div class="text-muted">{{ optional($card->translate($locale))->notes }}</div>
                             </div>
                             <div class="col-12">
-                                <div class="text-muted small">المرفقات: {{ $attachmentsCount }}</div>
+                                <div class="text-muted small">{{ __('global.attachments') }}: {{ $attachmentsCount }}</div>
                             </div>
                         </div>
                     </div>

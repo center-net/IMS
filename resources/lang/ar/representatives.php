@@ -33,6 +33,7 @@ return [
     'save_failed' => 'فشل الحفظ',
     'unauthorized' => 'غير مصرح لك بتنفيذ هذا الإجراء',
     'select_representative' => 'اختر المندوب',
+    'card_name' => 'اسم البطاقة',
     'tabs_basic' => 'الأساسية',
     'tabs_contact' => 'الاتصال',
     'tabs_finance' => 'المالية',

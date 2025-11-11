@@ -115,6 +115,11 @@ Route::group(
                 ->name('currencies.index')
                 ->middleware(['can:view-currencies']);
 
+            // Categories (Inventory Settings)
+            Route::view('/settings/inventory/categories', 'categories.index')
+                ->name('categories.index')
+                ->middleware(['can:view-categories']);
+
             // System Logs
             Route::view('/logs', 'logs.index')
                 ->name('logs.index')
