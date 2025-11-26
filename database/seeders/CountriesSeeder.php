@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Country;
+use Database\Seeders\Concerns\TranslatableSeeder;
 
 class CountriesSeeder extends Seeder
 {
+    use TranslatableSeeder;
     public function run(): void
     {
         $countries = [
@@ -38,14 +40,15 @@ class CountriesSeeder extends Seeder
         ];
 
         foreach ($countries as $c) {
-            $country = Country::firstOrCreate([
-                'iso_code' => $c['iso'],
-                'national_number' => $c['code'],
-            ]);
-
-            $country->translateOrNew('ar')->name = $c['ar'];
-            $country->translateOrNew('en')->name = $c['en'];
-            $country->save();
+            $this->upsertTranslatable(
+                Country::class,
+                ['iso_code' => $c['iso']],
+                ['national_number' => $c['code']],
+                [
+                    'ar' => ['name' => $c['ar']],
+                    'en' => ['name' => $c['en']],
+                ],
+            );
         }
 
         $this->command?->info('تم إدراج فلسطين والدول العربية مع الترجمات.');

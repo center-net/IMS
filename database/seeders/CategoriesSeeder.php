@@ -139,15 +139,27 @@ class CategoriesSeeder extends Seeder
      */
     private function createCategory(string $enName, string $arName, ?int $parentId = null): Category
     {
+        $existing = Category::query()
+            ->whereTranslation('name', $enName, 'en')
+            ->orWhereTranslation('name', $arName, 'ar')
+            ->first();
+
+        if ($existing) {
+            if ($existing->parent_id !== $parentId) {
+                $existing->parent_id = $parentId;
+            }
+            $existing->translateOrNew('en')->name = $enName;
+            $existing->translateOrNew('ar')->name = $arName;
+            $existing->save();
+            return $existing;
+        }
+
         $cat = new Category();
         $cat->parent_id = $parentId;
-        // code is auto-generated in model boot if empty
         $cat->save();
-
         $cat->translateOrNew('en')->name = $enName;
         $cat->translateOrNew('ar')->name = $arName;
         $cat->save();
-
         return $cat;
     }
 }

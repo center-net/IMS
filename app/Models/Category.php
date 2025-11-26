@@ -31,6 +31,12 @@ class Category extends Model
                 $cat->code = self::generateUniqueCode();
             }
         });
+
+        static::saving(function (Category $cat) {
+            if (empty($cat->code)) {
+                $cat->code = self::generateUniqueCode();
+            }
+        });
     }
 
     private static function generateUniqueCode(): string
@@ -51,4 +57,3 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 }
-

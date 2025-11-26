@@ -5,9 +5,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Offer;
 use Illuminate\Support\Carbon;
+use Database\Seeders\Concerns\TranslatableSeeder;
 
 class OffersSeeder extends Seeder
 {
+    use TranslatableSeeder;
     public function run(): void
     {
         $samples = [
@@ -38,17 +40,20 @@ class OffersSeeder extends Seeder
         ];
 
         foreach ($samples as $s) {
-            $offer = new Offer();
-            $offer->price = $s['price'];
-            $offer->original_price = $s['original_price'];
-            $offer->start_date = $s['start_date'];
-            $offer->end_date = $s['end_date'];
-            if (empty($offer->code)) {
-                $offer->code = Offer::generateUniqueCode();
-            }
-            $offer->translateOrNew('ar')->name = $s['ar'];
-            $offer->translateOrNew('en')->name = $s['en'];
-            $offer->save();
+            $this->upsertTranslatable(
+                Offer::class,
+                ['code' => Offer::generateUniqueCode()],
+                [
+                    'price' => $s['price'],
+                    'original_price' => $s['original_price'],
+                    'start_date' => $s['start_date'],
+                    'end_date' => $s['end_date'],
+                ],
+                [
+                    'ar' => ['name' => $s['ar']],
+                    'en' => ['name' => $s['en']],
+                ],
+            );
         }
 
         $this->command?->info('تم إدراج/تحديث عروض تجريبية مع ترجمات الاسم.');
