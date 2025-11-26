@@ -34,6 +34,12 @@ class Offer extends Model
                 $offer->code = self::generateUniqueCode();
             }
         });
+
+        static::saving(function (Offer $offer) {
+            if (empty($offer->code)) {
+                $offer->code = self::generateUniqueCode();
+            }
+        });
     }
 
     public static function generateUniqueCode(): string

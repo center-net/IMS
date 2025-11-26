@@ -43,6 +43,9 @@ class OffersSeeder extends Seeder
             $offer->original_price = $s['original_price'];
             $offer->start_date = $s['start_date'];
             $offer->end_date = $s['end_date'];
+            if (empty($offer->code)) {
+                $offer->code = Offer::generateUniqueCode();
+            }
             $offer->translateOrNew('ar')->name = $s['ar'];
             $offer->translateOrNew('en')->name = $s['en'];
             $offer->save();
@@ -51,4 +54,3 @@ class OffersSeeder extends Seeder
         $this->command?->info('تم إدراج/تحديث عروض تجريبية مع ترجمات الاسم.');
     }
 }
-
