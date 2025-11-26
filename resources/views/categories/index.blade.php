@@ -8,6 +8,9 @@
         <div class="col-12">
             @livewire('categories.category-list')
         </div>
+        <div class="col-12">
+            @livewire('categories.category-form')
+        </div>
     </div>
     @if(session('message'))
         <div class="alert alert-success mt-3">{{ session('message') }}</div>
